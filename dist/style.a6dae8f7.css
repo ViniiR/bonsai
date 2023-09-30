@@ -1,2 +1,452 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Neuton:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+* {
+  outline: none;
+  margin: 0;
+  padding: 0;
+  font-family: "open sans";
+  color: #4c4d5f;
+}
+
+header {
+  height: 100px;
+  width: 100%;
+}
+header section.sticky-container {
+  width: inherit;
+  height: inherit;
+  position: fixed;
+  background-color: white;
+  z-index: 100;
+}
+header section.sticky-container > section {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 25px 35px;
+  align-items: center;
+}
+header section.sticky-container > section > section#img-logo-container {
+  cursor: pointer;
+  width: 150px;
+}
+header section.sticky-container > section button.hamburguer-menu {
+  cursor: pointer;
+  border: none;
+  height: 25px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+header section.sticky-container > section button.hamburguer-menu span {
+  width: 40px;
+  height: 4px;
+  display: block;
+  border-radius: 5px;
+  background-color: #4c4d5f;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+main section#plans-pricing {
+  width: 95%;
+  height: 170px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+main section#plans-pricing h2 {
+  font-family: "Noto Serif", serif;
+  font-weight: lighter;
+  padding-left: 10px;
+  font-size: 1.4rem;
+}
+main section#plans-pricing section#months-free-switch {
+  height: 60%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+main section#plans-pricing section#months-free-switch div {
+  width: 80%;
+  font-size: 1.1rem;
+}
+main section#plans-pricing section#months-free-switch div#free-2-months {
+  text-align: end;
+  color: #00b289;
+  font-weight: bold;
+  font-size: 0.9rem;
+  position: relative;
+}
+main section#plans-pricing section#months-free-switch div#free-2-months div#curved-arrow {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0px;
+  right: -19px;
+  border-radius: 50px;
+  border: 3px dashed #00b289;
+  box-sizing: border-box;
+  z-index: -11;
+}
+main section#plans-pricing section#months-free-switch div#free-2-months div#curved-arrow div#parasite {
+  width: 40px;
+  height: 55px;
+  background-color: white;
+  position: absolute;
+  z-index: -10;
+  top: -5px;
+  left: -5px;
+}
+main section#plans-pricing section#months-free-switch div#free-2-months div#curved-arrow div#parasite::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 42.5px;
+  right: -5px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(0, 178, 137, 1);'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
+  transform: rotate(45deg);
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch {
+  display: flex;
+  height: 40px;
+  margin-top: 10px;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper {
+  display: flex;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper, main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper * {
+  cursor: pointer;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper::after {
+  content: "";
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 3px;
+  border-radius: 50px;
+  background-color: white;
+  pointer-events: none;
+  transition: left linear 0.1s;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper:has(input#month-year-switch:checked)::after {
+  left: 22px;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper input#month-year-switch {
+  appearance: none;
+  height: 30px;
+  width: 50px;
+  background-color: #00b289;
+  border-radius: 20px;
+}
+main section.trials {
+  box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.166);
+  border: 1px solid rgba(114, 114, 114, 0.296);
+  border-radius: 5px;
+  padding: 50px 25px 30px 20px;
+  height: max-content;
+  width: 75%;
+  overflow: hidden;
+  position: relative;
+}
+main section.trials article.trial-plans {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  gap: 10px;
+  position: inherit;
+}
+main section.trials article.trial-plans div.most-popular-tag {
+  z-index: 10;
+  right: -70px;
+  width: 230px;
+  height: 30px;
+  position: absolute;
+  background-color: #00b289;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transform: rotate(45deg);
+}
+main section.trials article.trial-plans h2 {
+  font-size: 1.2rem;
+}
+main section.trials article.trial-plans p {
+  font-size: 0.9rem;
+}
+main section.trials article.trial-plans section.trial-price {
+  border-bottom: 1px solid #00b289;
+  margin-bottom: 20px;
+}
+main section.trials article.trial-plans section.trial-price > article {
+  width: 250px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: end;
+}
+main section.trials article.trial-plans section.trial-price > article div:first-child {
+  font-size: 3.9rem;
+  height: 90px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  font-weight: bolder;
+}
+main section.trials article.trial-plans section.trial-price > article div:first-child span {
+  font-size: 1.8rem;
+  height: 60%;
+  font-weight: normal;
+  width: 20px;
+}
+main section.trials article.trial-plans section.trial-price > article div:last-child {
+  font-size: 1.7rem;
+  width: 60%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: end;
+}
+main section.trials article.trial-plans ul {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+main section.trials article.trial-plans ul.checkmark-list {
+  list-style-type: none;
+  padding: 0;
+}
+main section.trials article.trial-plans ul.checkmark-list > li::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 178, 137, 1); transform: translate(-2px, -2px);"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>') no-repeat;
+}
+main section.trials article.trial-plans ul li {
+  list-style-type: none;
+  display: flex;
+  font-size: 0.9rem;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+main section.trials article.trial-plans button.start-free-button {
+  width: 100%;
+  height: 70px;
+  font-size: 1rem;
+  margin-top: 20px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-family: "Kanit", sans-serif;
+  letter-spacing: 1px;
+  background-color: #00b289;
+  border: none;
+}
+main section.super-charge {
+  padding: 0px 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+main section.super-charge article#sub-title {
+  height: 200px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+main section.super-charge article#sub-title h2 {
+  text-align: center;
+  font-weight: lighter;
+  font-family: "Times New Roman", Times, serif;
+}
+main section.super-charge article.add-ons-article {
+  width: 80%;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+main section.super-charge article.add-ons-article h2 {
+  font-weight: bolder;
+}
+main section.super-charge article.add-ons-article section.sub-title {
+  height: 110px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+}
+main section.super-charge article.add-ons-article section.sub-title h3 {
+  font-size: 1rem;
+  font-weight: bolder;
+}
+main section.super-charge article.add-ons-article section.sub-title p {
+  font-family: "Roboto", sans-serif;
+}
+main section.super-charge article.add-ons-article section.sub-title a.arrow-anchor {
+  text-decoration: none;
+  color: #00b289;
+  font-weight: bold;
+  font-size: 0.9rem;
+  position: relative;
+  width: max-content;
+}
+main section.super-charge article.add-ons-article section.sub-title a.arrow-anchor::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: -17px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' style='fill: rgba(0, 178, 137, 1);'%3E%3Cpath d='M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z'%3E%3C/path%3E%3C/svg%3E");
+}
+main section.super-charge article.add-ons-article section.trial-price2 div:first-child {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+main section.super-charge article.add-ons-article section.trial-price2 div:last-child {
+  font-size: 0.9rem;
+}
+main section#your-business-section {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+main section#your-business-section > p {
+  height: 60%;
+  width: 35%;
+  text-align: center;
+  font-family: "Neuton", serif;
+  font-size: 2.2rem;
+}
+main section#your-business-section > p span {
+  color: #00b289;
+  font-family: inherit;
+}
+main section#your-business-section > button {
+  width: 140px;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  background-color: #00b289;
+  height: 50px;
+}
+main section.frequent-questions {
+  width: 80%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+main section.frequent-questions > h2 {
+  color: #00b289;
+  text-align: center;
+  font-size: 1.4rem;
+  margin: 30px 0px;
+}
+main section.frequent-questions article {
+  display: flex;
+  flex-flow: column nowrap;
+}
+main section.frequent-questions article button.dropdown {
+  cursor: pointer;
+  font-size: 1.5rem;
+  text-align: start;
+  font-weight: bold;
+  width: 100%;
+  border: none;
+  position: relative;
+  height: 70px;
+}
+main section.frequent-questions article button.dropdown:hover {
+  color: #00b289;
+}
+main section.frequent-questions article button.dropdown::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: -10px;
+  top: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(76, 77, 95, 0.355);transform: ;msFilter:;'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
+}
+main section.frequent-questions article aside {
+  font-size: 0.8rem;
+  display: none;
+}
+
+footer {
+  margin-top: 50px;
+  padding: 50px 25px;
+  height: 1700px;
+}
+footer > section {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+}
+footer > section > article {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+}
+footer > section > article > h2 {
+  font-size: 1.2rem;
+}
+footer > section > article > ul {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  list-style-type: none;
+}
+footer > section > article > ul > li > a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-family: "Poppins", sans-serif;
+}
+footer > section > article > ul > li > a.pricing-anchor {
+  color: #00b289;
+}
+footer > section > article > ul > li > a.dropdown-anchor {
+  position: relative;
+}
+footer > section > article > ul > li > a.dropdown-anchor::after {
+  content: "";
+  height: 30px;
+  width: 30px;
+  display: block;
+  position: absolute;
+  right: -30px;
+  top: -5px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(76, 77, 95, 0.9);transform: ;msFilter:;'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
+}
 
 /*# sourceMappingURL=/style.a6dae8f7.css.map */
