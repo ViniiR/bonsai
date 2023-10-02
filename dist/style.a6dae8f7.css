@@ -34,21 +34,112 @@ header section.sticky-container > section > section#img-logo-container {
   cursor: pointer;
   width: 150px;
 }
-header section.sticky-container > section button.hamburguer-menu {
+header button.hamburguer-menu-button {
   cursor: pointer;
   border: none;
   height: 25px;
+  width: 40px;
+  position: fixed;
+  right: 40px;
+  top: 30px;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  z-index: 190;
 }
-header section.sticky-container > section button.hamburguer-menu span {
+header button.hamburguer-menu-button span {
   width: 40px;
   height: 4px;
   display: block;
   border-radius: 5px;
   background-color: #4c4d5f;
+  z-index: inherit;
+  position: absolute;
+  transition: top linear 0.5s, bottom linear 0.5s, transform linear 0.5s;
+}
+header button.hamburguer-menu-button span#first-span {
+  top: 0;
+}
+header button.hamburguer-menu-button span#second-span {
+  transition: background-color linear 0.5s;
+}
+header button.hamburguer-menu-button span#third-span {
+  bottom: 0;
+}
+header aside#hamburguer-menu {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  z-index: 101;
+  padding: 20px 50px;
+  box-sizing: border-box;
+}
+header aside#hamburguer-menu > section.menu-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+  width: inherit;
+}
+header aside#hamburguer-menu > section.menu-container > section#smaller-logo-container {
+  width: 40px;
+}
+header aside#hamburguer-menu > section.menu-container > section#smaller-logo-container img.smaller-logo {
+  width: 100%;
+}
+header aside#hamburguer-menu > section.menu-container section#menu-content ul {
+  list-style-type: none;
+  display: flex;
+  flex-flow: column nowrap;
+}
+header aside#hamburguer-menu > section.menu-container section#menu-content ul li {
+  border-bottom: 1px solid rgba(76, 77, 95, 0.2470588235);
+  height: 50px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+}
+header aside#hamburguer-menu > section.menu-container section#menu-content ul li.dropdown-aside-menu-list-item::after {
+  content: "";
+  width: 25px;
+  height: 25px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(76, 77, 95, 1);transform: ;msFilter:;'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
+}
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+}
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button {
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
+  height: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button#login {
+  border: 1px solid #00b289;
+  color: #00b289;
+}
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button#login:hover {
+  background-color: #00b289;
+  color: white;
+}
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button.start-free-button {
+  border: none;
+  background-color: #00b289;
+  color: white;
+}
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button.start-free-button:hover {
+  background-color: #00bc90;
 }
 
 main {
@@ -255,6 +346,7 @@ main section.trials article.trial-plans ul li {
   align-items: center;
 }
 main section.trials article.trial-plans button.start-free-button {
+  cursor: pointer;
   width: 100%;
   height: 70px;
   font-size: 1rem;
@@ -266,6 +358,9 @@ main section.trials article.trial-plans button.start-free-button {
   letter-spacing: 1px;
   background-color: #00b289;
   border: none;
+}
+main section.trials article.trial-plans button.start-free-button:hover {
+  background-color: #00bc90;
 }
 main section.super-charge {
   padding: 0px 20px;
@@ -360,6 +455,10 @@ main section#your-business-section > button {
   border: none;
   background-color: #00b289;
   height: 50px;
+  cursor: pointer;
+}
+main section#your-business-section > button:hover {
+  background-color: #00bc90;
 }
 main section.frequent-questions {
   width: 80%;

@@ -120,14 +120,63 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"src/index.js":[function(require,module,exports) {
 "use strict";
 
-//TODO: bold and dim fonts in month year switch, change prices basedd on the switch state, do the hamburguer menu menu and animate it;
+//TODO: bold and dim fonts in month year switch, change prices based on the switch state, do the hamburguer menu menu and animate it;
 var dropdownButtons = document.querySelectorAll("button.dropdown");
+var hamburguerMenuButton = document.querySelector('button.hamburguer-menu-button');
+
+//TODO: clean this sht
+hamburguerMenuButton.addEventListener("click", function () {
+  var asideMenu = this.parentNode.querySelector('aside#hamburguer-menu');
+  asideMenu.isActive = asideMenu.style.display === 'flex';
+  var spans = {
+    first: hamburguerMenuButton.querySelector('span#first-span'),
+    second: hamburguerMenuButton.querySelector('span#second-span'),
+    third: hamburguerMenuButton.querySelector('span#third-span')
+  };
+  var rotate45deg = function rotate45deg(span) {
+    span.style.transform = 'rotate(45deg)';
+  };
+  var rotateneg45deg = function rotateneg45deg(span) {
+    span.style.transform = 'rotate(-45deg)';
+  };
+  var setXButton = function setXButton() {
+    var delay = 500;
+    spans.first.style.top = '10.5px';
+    spans.second.style.backgroundColor = 'transparent';
+    spans.third.style.bottom = '10.5px';
+    setTimeout(function () {
+      rotate45deg(spans.first);
+    }, delay);
+    setTimeout(function () {
+      rotateneg45deg(spans.third);
+    }, delay);
+  };
+  var setHamburguerButton = function setHamburguerButton() {
+    var delay = 500;
+    spans.first.style.transform = 'rotate(0deg)';
+    spans.third.style.transform = 'rotate(0deg)';
+    setTimeout(function () {
+      spans.first.style.top = '0px';
+      spans.second.style.backgroundColor = '#4c4d5f';
+      spans.third.style.bottom = '0px';
+    }, delay);
+  };
+
+  //TODO: it should be transform and not display, do the x animation for the button
+  if (asideMenu.isActive) {
+    asideMenu.style.display = 'none';
+    setHamburguerButton();
+  } else {
+    asideMenu.style.display = 'flex';
+    setXButton();
+  }
+});
 dropdownButtons.forEach(function (button) {
   button.addEventListener("click", function () {
     var parentArticle = this.parentNode;
     var asideMenu = parentArticle.querySelector("aside");
     console.log(asideMenu.style.display);
-    var isActive = asideMenu.style.display !== "block" ? false : true;
+    var isActive = asideMenu.style.display === "block" ? true : false;
     if (isActive) {
       asideMenu.style.display = "none";
     } else {
@@ -160,7 +209,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57424" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52523" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

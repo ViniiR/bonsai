@@ -35,20 +35,115 @@ header {
                 cursor: pointer;
                 width: 150px;
             }
-            button.hamburguer-menu {
-                cursor: pointer;
-                border: none;
-                height: 25px;
+        }
+    }
+    button.hamburguer-menu-button {
+        cursor: pointer;
+        border: none;
+        height: 25px;
+        width: 40px;
+        position: fixed;
+        right: 40px;
+        top: 30px;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        
+        z-index: 190;
+        span {
+            $transition-delay: .5s;
+            width: 40px;
+            height: 4px;
+            display: block;
+            border-radius: 5px;
+            background-color: $maingray;
+            z-index: inherit;
+            position: absolute;
+            transition: top linear $transition-delay, bottom linear $transition-delay, transform linear $transition-delay;
+            &#first-span {
+                top: 0;
+            }
+            &#second-span {
+                transition: background-color linear $transition-delay;
+            }
+            &#third-span {
+                bottom: 0;
+            }
+        }
+    }
+    aside#hamburguer-menu {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100vh;
+        background-color: white;
+        z-index: 101;
+        padding: 20px 50px;
+        box-sizing: border-box;
+        > section.menu-container {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 20px;
+            width: inherit;
+            > section#smaller-logo-container {
+                width: 40px;
+                img.smaller-logo {
+                    width: 100%;
+                }
+            }
+            section#menu-content {
+                ul {
+                    list-style-type: none;
+                    display: flex;
+                    flex-flow: column nowrap;
+                    li {
+                        border-bottom: 1px solid #4c4d5f3f;
+                        height: 50px;
+                        display: flex;
+                        flex-flow: row nowrap;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 95%;
+                        &.dropdown-aside-menu-list-item::after {
+                            content: '';
+                            width: 25px;
+                            height: 25px;
+                            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(76, 77, 95, 1);transform: ;msFilter:;'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
+                        }
+                    }
+                }
+            }
+            section#login-sign-in-section {
                 display: flex;
                 flex-flow: column nowrap;
-                justify-content: space-between;
-                align-items: center;
-                span {
-                    width: 40px;
-                    height: 4px;
-                    display: block;
+                gap: 15px;
+                button {
+                    cursor: pointer;
+                    width: 100%;
                     border-radius: 5px;
-                    background-color: $maingray;
+                    font-weight: bold;
+                    height: 40px;
+                    display: flex;
+                    flex-flow: row nowrap;
+                    justify-content: center;
+                    align-items: center;
+                    &#login {
+                        border: 1px solid $maingreen ;
+                        color: $maingreen;
+                        &:hover {
+                            background-color: $maingreen;
+                            color: white;
+                        }
+                    }
+                    &.start-free-button {
+                        border: none;
+                        background-color: $maingreen;
+                        color: white;
+                        &:hover {
+                            background-color: #00bc90;
+                        }
+                    }
                 }
             }
         }
@@ -258,6 +353,7 @@ main {
                 }
             }
             button.start-free-button {
+                cursor: pointer;
                 width: 100%;
                 height: 70px;
                 font-size: 1rem;
@@ -269,6 +365,9 @@ main {
                 letter-spacing: 1px;
                 background-color: $maingreen;
                 border: none;
+                &:hover {
+                    background-color: #00bc90;
+                }
             }
         }
     }
@@ -368,6 +467,10 @@ main {
             border: none;
             background-color: $maingreen;
             height: 50px;
+            cursor: pointer;
+            &:hover {
+                background-color: #00bc90;
+            }
         }
     }
     section.frequent-questions {
