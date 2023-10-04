@@ -4,11 +4,92 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Neuton:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400&display=swap");
 * {
   outline: none;
   margin: 0;
   padding: 0;
   font-family: "open sans";
+  color: #4c4d5f;
+}
+
+body aside#product-aside {
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  width: 100%;
+  padding: 60px 0px 20px;
+  height: 90vh;
+  display: none;
+  flex-flow: column nowrap;
+  align-items: center;
+  background-color: white;
+  z-index: 190;
+  gap: 40px;
+}
+body aside#product-aside > section {
+  height: 100px;
+  width: 80%;
+  border-bottom: 1px solid rgba(76, 77, 95, 0.1137254902);
+  cursor: pointer;
+}
+body aside#product-aside > section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  font-weight: normal;
+  color: black;
+  font-family: "IBM Plex Serif", serif;
+}
+body aside#product-aside > section p {
+  font-size: 0.75rem;
+  font-weight: lighter;
+}
+body aside#bonsai-workflow-aside {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  width: 100%;
+  height: 520px;
+  background-color: white;
+  gap: 40px;
+  padding-left: 20px;
+  padding-top: 20px;
+  z-index: 200;
+}
+body aside#bonsai-workflow-aside section {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+body aside#bonsai-workflow-aside section a {
+  text-decoration: none;
+  color: #4c4d5f;
+}
+body aside#templates-aside {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  width: 100%;
+  height: 520px;
+  background-color: white;
+  gap: 40px;
+  padding-top: 20px;
+  padding-left: 20px;
+  z-index: 200;
+}
+body aside#templates-aside > section {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+body aside#templates-aside > section a {
+  text-decoration: none;
   color: #4c4d5f;
 }
 
@@ -56,26 +137,28 @@ header button.hamburguer-menu-button span {
   background-color: #4c4d5f;
   z-index: inherit;
   position: absolute;
-  transition: top linear 0.5s, bottom linear 0.5s, transform linear 0.5s;
+  transition: top linear 0.2s, bottom linear 0.2s, transform linear 0.2s;
 }
 header button.hamburguer-menu-button span#first-span {
   top: 0;
 }
 header button.hamburguer-menu-button span#second-span {
-  transition: background-color linear 0.5s;
+  transition: background-color linear 0.2s;
 }
 header button.hamburguer-menu-button span#third-span {
   bottom: 0;
 }
 header aside#hamburguer-menu {
   position: fixed;
-  display: none;
+  display: flex;
   width: 100%;
   height: 100vh;
   background-color: white;
   z-index: 101;
-  padding: 20px 50px;
+  padding: 20px 30px;
   box-sizing: border-box;
+  transform: translateX(100%);
+  transition: transform linear 0.3s;
 }
 header aside#hamburguer-menu > section.menu-container {
   display: flex;
@@ -102,6 +185,7 @@ header aside#hamburguer-menu > section.menu-container section#menu-content ul li
   justify-content: space-between;
   align-items: center;
   width: 95%;
+  cursor: pointer;
 }
 header aside#hamburguer-menu > section.menu-container section#menu-content ul li.dropdown-aside-menu-list-item::after {
   content: "";
@@ -217,6 +301,15 @@ main section#plans-pricing section#months-free-switch div#monthly-switch {
   justify-content: space-around;
   align-items: center;
 }
+main section#plans-pricing section#months-free-switch div#monthly-switch span {
+  transition: font-weight linear 0.1s, color linear 0.1s;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#monthly {
+  font-weight: bold;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch span#yearly {
+  color: #8e8f98;
+}
 main section#plans-pricing section#months-free-switch div#monthly-switch span#input-wrapper {
   display: flex;
   height: 100%;
@@ -290,15 +383,20 @@ main section.trials article.trial-plans p {
 main section.trials article.trial-plans section.trial-price {
   border-bottom: 1px solid #00b289;
   margin-bottom: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: start;
+  height: 90px;
 }
-main section.trials article.trial-plans section.trial-price > article {
+main section.trials article.trial-plans section.trial-price > article.price-article {
   width: 250px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: end;
 }
-main section.trials article.trial-plans section.trial-price > article div:first-child {
+main section.trials article.trial-plans section.trial-price > article.price-article div:first-child {
   font-size: 3.9rem;
   height: 90px;
   display: flex;
@@ -307,19 +405,27 @@ main section.trials article.trial-plans section.trial-price > article div:first-
   align-items: center;
   font-weight: bolder;
 }
-main section.trials article.trial-plans section.trial-price > article div:first-child span {
+main section.trials article.trial-plans section.trial-price > article.price-article div:first-child span.dollar-sign {
   font-size: 1.8rem;
   height: 60%;
   font-weight: normal;
   width: 20px;
 }
-main section.trials article.trial-plans section.trial-price > article div:last-child {
+main section.trials article.trial-plans section.trial-price > article.price-article div:last-child {
   font-size: 1.7rem;
   width: 60%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: end;
+}
+main section.trials article.trial-plans section.trial-price > section.billed-yearly {
+  margin: 0px 2px 2px 0px;
+  width: 100%;
+  font-size: 0.9rem;
+  display: none;
+  justify-content: flex-end;
+  height: 98%;
 }
 main section.trials article.trial-plans ul {
   display: flex;
@@ -363,7 +469,7 @@ main section.trials article.trial-plans button.start-free-button:hover {
   background-color: #00bc90;
 }
 main section.super-charge {
-  padding: 0px 20px;
+  padding: 0px 25px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -382,29 +488,37 @@ main section.super-charge article#sub-title h2 {
   font-weight: lighter;
   font-family: "Times New Roman", Times, serif;
 }
-main section.super-charge article.add-ons-article {
+main section.super-charge section#add-ons-article-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 2px;
+  gap: 40px;
+}
+main section.super-charge section#add-ons-article-container article.add-ons-article {
   width: 80%;
   display: flex;
   flex-flow: column nowrap;
   gap: 20px;
 }
-main section.super-charge article.add-ons-article h2 {
+main section.super-charge section#add-ons-article-container article.add-ons-article h2 {
   font-weight: bolder;
 }
-main section.super-charge article.add-ons-article section.sub-title {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.sub-title {
   height: 110px;
   display: flex;
   flex-flow: column nowrap;
   gap: 5px;
 }
-main section.super-charge article.add-ons-article section.sub-title h3 {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.sub-title h3#bonsai-tax-accounting {
   font-size: 1rem;
   font-weight: bolder;
 }
-main section.super-charge article.add-ons-article section.sub-title p {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.sub-title p#manage-track-expenses {
   font-family: "Roboto", sans-serif;
 }
-main section.super-charge article.add-ons-article section.sub-title a.arrow-anchor {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.sub-title a.arrow-anchor {
   text-decoration: none;
   color: #00b289;
   font-weight: bold;
@@ -412,7 +526,7 @@ main section.super-charge article.add-ons-article section.sub-title a.arrow-anch
   position: relative;
   width: max-content;
 }
-main section.super-charge article.add-ons-article section.sub-title a.arrow-anchor::after {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.sub-title a.arrow-anchor::after {
   content: "";
   display: inline-block;
   position: absolute;
@@ -421,11 +535,11 @@ main section.super-charge article.add-ons-article section.sub-title a.arrow-anch
   right: -17px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' style='fill: rgba(0, 178, 137, 1);'%3E%3Cpath d='M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z'%3E%3C/path%3E%3C/svg%3E");
 }
-main section.super-charge article.add-ons-article section.trial-price2 div:first-child {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.trial-price2 div:first-child {
   font-size: 2.5rem;
   font-weight: bold;
 }
-main section.super-charge article.add-ons-article section.trial-price2 div:last-child {
+main section.super-charge section#add-ons-article-container article.add-ons-article section.trial-price2 div:last-child {
   font-size: 0.9rem;
 }
 main section#your-business-section {
@@ -505,7 +619,7 @@ main section.frequent-questions article aside {
 footer {
   margin-top: 50px;
   padding: 50px 25px;
-  height: 1700px;
+  padding-bottom: 200px;
 }
 footer > section {
   display: flex;
@@ -526,26 +640,45 @@ footer > section > article > ul {
   gap: 10px;
   list-style-type: none;
 }
-footer > section > article > ul > li > a {
+footer > section > article > ul > li {
+  width: max-content;
+  background-color: green;
+}
+footer > section > article > ul > li a {
   text-decoration: none;
   font-size: 0.9rem;
   font-family: "Poppins", sans-serif;
 }
-footer > section > article > ul > li > a.pricing-anchor {
+footer > section > article > ul > li a.pricing-anchor {
   color: #00b289;
 }
-footer > section > article > ul > li > a.dropdown-anchor {
+footer > section > article > ul > li a.dropdown-anchor {
   position: relative;
 }
-footer > section > article > ul > li > a.dropdown-anchor::after {
-  content: "";
-  height: 30px;
-  width: 30px;
-  display: block;
+footer > section > article > ul > li article.dropdown-wrapper {
+  width: max-content;
+  position: relative;
+}
+footer > section > article > ul > li article.dropdown-wrapper > div.dropdown-arrow {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  display: inline-block;
   position: absolute;
-  right: -30px;
-  top: -5px;
+  left: 100%;
+  top: -1px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(76, 77, 95, 0.9);transform: ;msFilter:;'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
+}
+footer > section > article > ul > li > ul.dropdown-anchor-menus {
+  list-style-type: none;
+  padding-left: 10px;
+  padding-top: 5px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+  height: 0px;
+  overflow: hidden;
+  transition: max-height linear 0.2s;
 }
 
 /*# sourceMappingURL=/style.a6dae8f7.css.map */

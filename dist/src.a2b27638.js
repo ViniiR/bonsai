@@ -120,54 +120,210 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"src/index.js":[function(require,module,exports) {
 "use strict";
 
-//TODO: bold and dim fonts in month year switch, change prices based on the switch state, do the hamburguer menu menu and animate it;
+//TODO: finish dropdown links at footer;
 var dropdownButtons = document.querySelectorAll("button.dropdown");
-var hamburguerMenuButton = document.querySelector('button.hamburguer-menu-button');
+var hamburguerMenuButton = document.querySelector("button.hamburguer-menu-button");
+var monthYearSwitch = document.querySelector("input#month-year-switch");
+var superChargeSubtitle = document.querySelector("article#sub-title > h2");
+var addOnsContainer = document.querySelector("section#add-ons-article-container");
+var monthYearTrialPrice = document.querySelectorAll("div.month-year-trial-price");
+var bonsaiTaxPricingTag = document.querySelector("div#bonsai-tax-pricing-tag");
+var partnersPricingTag = document.querySelector("div#partners-pricing-tag");
+var bonsaiTaxAccounting = document.querySelector("h3#bonsai-tax-accounting");
+var manageTrackExpenses = document.querySelector("p#manage-track-expenses");
+var productButton = document.querySelector("#product-button");
+var bonsaiWorkflowButton = document.querySelector("#bonsai-workflow-button");
+var templatesButton = document.querySelector("#templates-button");
+var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
+dropdownLinksArrows.forEach(function (link) {
+  link.addEventListener("click", function (event) {
+    var menu = this.parentNode.parentNode.querySelector("ul.dropdown-anchor-menus");
+    var getMaxHeight = function getMaxHeight(element) {
+      element.style.height = "max-content";
+      var maxHeight = element.offsetHeight;
+      element.style.height = "0px";
+      return maxHeight;
+    };
+    link.isActive = !link.isActive;
+    var startTransition = function startTransition(element, maxHeight) {
+      link.style.pointerEvents = 'none';
+      var elementHeight = element.style.height;
+      var numberHeight = elementHeight.slice(0, elementHeight.indexOf('p'));
+      if (numberHeight >= maxHeight) {
+        link.style.pointerEvents = 'all';
+        return;
+      }
+      var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
+      element.style.height = Number(slicedHeight) + 10 + "px";
+      requestAnimationFrame(function () {
+        startTransition(element, maxHeight);
+      });
+    };
+    var reverseTransition = function reverseTransition(element) {
+      link.style.pointerEvents = 'none';
+      var height = element.style.height;
+      var numberHeight = height.slice(0, height.indexOf('p'));
+      if (numberHeight <= 5) {
+        link.style.pointerEvents = 'all';
+        return;
+      }
+      element.style.height = Number(numberHeight) - 10 + 'px';
+      requestAnimationFrame(function () {
+        reverseTransition(element);
+      });
+    };
+    if (!link.isActive) {
+      reverseTransition(menu);
+    } else {
+      window.requestAnimationFrame(function () {
+        startTransition(menu, getMaxHeight(menu));
+      });
+    }
+  });
+});
+
+//FIXME: PLEASE JUST FUCKING FIX THIS BULLSHIT
+
+productButton.addEventListener("click", function (event) {
+  event.stopPropagation();
+  var aside = document.querySelector("#product-aside");
+  aside.isActive = aside.style.display === "flex";
+  aside.style.display = aside.isActive ? "none" : "flex";
+});
+templatesButton.addEventListener("click", function (event) {
+  event.stopPropagation();
+  var aside = document.querySelector("aside#templates-aside");
+  aside.isActive = aside.style.display === "flex";
+  aside.style.display = aside.isActive ? "none" : "flex";
+});
+bonsaiWorkflowButton.addEventListener("click", function (event) {
+  event.stopPropagation();
+  var aside = document.querySelector("#bonsai-workflow-aside");
+  aside.isActive = aside.style.display === "flex";
+  aside.style.display = aside.isActive ? "none" : "flex";
+});
+monthYearSwitch.addEventListener("change", function (event) {
+  var billedYearly = document.querySelectorAll("section.billed-yearly");
+  var trialPriceSection = document.querySelectorAll("section.trial-price");
+  var moneySpans = document.querySelectorAll("span.money-span");
+  var spans = {
+    monthly: document.querySelector("span#monthly"),
+    yearly: document.querySelector("span#yearly")
+  };
+  var setYearly = function setYearly() {
+    var yearlyValues = [17, 32, 52];
+    spans.monthly.style.fontWeight = "normal";
+    spans.monthly.style.color = "#8e8f98";
+    spans.yearly.style.fontWeight = "bold";
+    spans.yearly.style.color = "#4c4d5f";
+    superChargeSubtitle.innerText = "Customize your workflow with add-ons";
+    addOnsContainer.style.flexDirection = "column-reverse";
+    bonsaiTaxPricingTag.innerText = "$100";
+    partnersPricingTag.innerText = "$90";
+    bonsaiTaxAccounting.innerText = "Accounting & Tax Assistant";
+    manageTrackExpenses.innerText = "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
+    monthYearTrialPrice.forEach(function (div) {
+      div.innerText = "/YEAR";
+    });
+    billedYearly.forEach(function (section) {
+      section.style.display = "flex";
+    });
+    trialPriceSection.forEach(function (section) {
+      section.style.height = "110px";
+    });
+    for (var i = 0; i < 3; i++) {
+      moneySpans[i].innerText = yearlyValues[i];
+    }
+  };
+  var setMonthly = function setMonthly() {
+    var monthlyValues = [24, 39, 79];
+    spans.monthly.style.fontWeight = "bold";
+    spans.monthly.style.color = "#4c4d5f";
+    spans.yearly.style.fontWeight = "normal";
+    spans.yearly.style.color = "#8e8f98";
+    superChargeSubtitle.innerText = "Super charge your work with add-ons";
+    addOnsContainer.style.flexDirection = "column";
+    bonsaiTaxPricingTag.innerText = "$10";
+    partnersPricingTag.innerText = "$9";
+    bonsaiTaxAccounting.innerText = "Bonsai Tax";
+    manageTrackExpenses.innerText = "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
+    monthYearTrialPrice.forEach(function (div) {
+      div.innerText = "/MONTH";
+    });
+    billedYearly.forEach(function (section) {
+      section.style.display = "none";
+    });
+    trialPriceSection.forEach(function (section) {
+      section.style.height = "90px";
+    });
+    for (var i = 0; i < 3; i++) {
+      moneySpans[i].innerText = monthlyValues[i];
+    }
+  };
+  if (event.target.checked) {
+    setYearly();
+  } else {
+    setMonthly();
+  }
+});
 
 //TODO: clean this sht
 hamburguerMenuButton.addEventListener("click", function () {
-  var asideMenu = this.parentNode.querySelector('aside#hamburguer-menu');
-  asideMenu.isActive = asideMenu.style.display === 'flex';
+  var asideMenu = this.parentNode.querySelector("aside#hamburguer-menu");
+  asideMenu.isActive = asideMenu.style.transform === "translateX(0%)";
   var spans = {
-    first: hamburguerMenuButton.querySelector('span#first-span'),
-    second: hamburguerMenuButton.querySelector('span#second-span'),
-    third: hamburguerMenuButton.querySelector('span#third-span')
+    first: hamburguerMenuButton.querySelector("span#first-span"),
+    second: hamburguerMenuButton.querySelector("span#second-span"),
+    third: hamburguerMenuButton.querySelector("span#third-span")
   };
-  var rotate45deg = function rotate45deg(span) {
-    span.style.transform = 'rotate(45deg)';
+  var hideInnerMenus = function hideInnerMenus() {
+    var productsAside = document.querySelector("aside#product-aside");
+    var workflowAside = document.querySelector("aside#bonsai-workflow-aside");
+    var templatesAside = document.querySelector("aside#templates-aside");
+    for (var _i = 0, _arr = [productsAside, workflowAside, templatesAside]; _i < _arr.length; _i++) {
+      var aside = _arr[_i];
+      aside.style.display = "none";
+    }
   };
-  var rotateneg45deg = function rotateneg45deg(span) {
-    span.style.transform = 'rotate(-45deg)';
+  var setButtonDisabledState = function setButtonDisabledState(state) {
+    hamburguerMenuButton.disabled = state;
   };
   var setXButton = function setXButton() {
-    var delay = 500;
-    spans.first.style.top = '10.5px';
-    spans.second.style.backgroundColor = 'transparent';
-    spans.third.style.bottom = '10.5px';
+    setButtonDisabledState(true);
+    var delay = 200;
+    spans.first.style.top = "10.5px";
+    spans.second.style.backgroundColor = "transparent";
+    spans.third.style.bottom = "10.5px";
     setTimeout(function () {
-      rotate45deg(spans.first);
+      spans.first.style.transform = "rotate(45deg)";
     }, delay);
     setTimeout(function () {
-      rotateneg45deg(spans.third);
+      spans.third.style.transform = "rotate(-45deg)";
     }, delay);
+    setTimeout(function () {
+      setButtonDisabledState(false);
+    }, 500);
   };
   var setHamburguerButton = function setHamburguerButton() {
-    var delay = 500;
-    spans.first.style.transform = 'rotate(0deg)';
-    spans.third.style.transform = 'rotate(0deg)';
+    hideInnerMenus();
+    setButtonDisabledState(true);
+    var delay = 200;
+    spans.first.style.transform = "rotate(0deg)";
+    spans.third.style.transform = "rotate(0deg)";
     setTimeout(function () {
-      spans.first.style.top = '0px';
-      spans.second.style.backgroundColor = '#4c4d5f';
-      spans.third.style.bottom = '0px';
+      spans.first.style.top = "0px";
+      spans.second.style.backgroundColor = "#4c4d5f";
+      spans.third.style.bottom = "0px";
     }, delay);
+    setTimeout(function () {
+      setButtonDisabledState(false);
+    }, 500);
   };
-
-  //TODO: it should be transform and not display, do the x animation for the button
   if (asideMenu.isActive) {
-    asideMenu.style.display = 'none';
+    asideMenu.style.transform = "translateX(100%)";
     setHamburguerButton();
   } else {
-    asideMenu.style.display = 'flex';
+    asideMenu.style.transform = "translateX(0%)";
     setXButton();
   }
 });
@@ -209,7 +365,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52523" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49932" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
