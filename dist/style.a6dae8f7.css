@@ -642,7 +642,6 @@ footer > section > article > ul {
 }
 footer > section > article > ul > li {
   width: max-content;
-  background-color: green;
 }
 footer > section > article > ul > li a {
   text-decoration: none;
