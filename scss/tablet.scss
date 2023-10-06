@@ -1,0 +1,96 @@
+
+main {
+    section#plans-pricing {
+        flex-direction: row;
+        justify-content: center;
+        height: max-content;
+        max-width: fit-content;
+        margin-bottom: 50px;
+        h2 {
+            width: max-content;
+            padding: 0;
+            white-space: nowrap;
+
+        }
+        section#months-free-switch {
+            max-width: 300px;
+            height: 60px;
+            div#free-2-months {
+                width: 100%;
+            }
+            div#monthly-switch {
+                gap: 20px;
+                width: max-content;
+            }
+        }
+    }
+}
+
+@media (min-width: 490px) {
+    main {
+        > section#plans-pricing {
+            width: 80%;
+            gap: 30px;
+            section#months-free-switch {
+                div#monthly-switch {
+                    margin-right: 10px;
+                }
+            }
+        }
+        > section#your-business-section {
+            width: 90%;
+            flex-direction: row;
+            justify-content: space-around;
+            p {
+                height: max-content;
+            }
+        }
+    }
+}
+
+
+@media (min-width: 768px) {
+    main {
+        > section#plans-pricing {
+            gap: 50px;
+            align-items: end;
+            h2 {
+                font-size: 2rem;
+                font-weight: bold;
+            }
+            section#months-free-switch {
+                div#monthly-switch {
+                    margin-right: 10px;
+                }
+            }
+        }
+        > section.super-charge {
+            > article#sub-title {
+                h2 {
+                    font-size: 1.7rem;
+                }
+            }
+            > section#add-ons-article-container {
+                > article.add-ons-article {
+                    width: 90%;
+                    flex-direction: row-reverse;
+                    justify-content: space-between;
+                    align-items: center;
+                    > h2 {
+                        height: 60px;
+                        font-size: 1.9rem;
+                        width: 90px;
+                    }
+                    > section.trial-price2 {
+                        width: 90px;
+                    }
+                }
+            }
+        }
+        > section#your-business-section {
+            background-color: #f2faff;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px #f2faff;
+        }
+    }
+}

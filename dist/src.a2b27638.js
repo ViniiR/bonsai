@@ -120,7 +120,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"src/index.js":[function(require,module,exports) {
 "use strict";
 
-//TODO: finish dropdown links at footer;
 var dropdownButtons = document.querySelectorAll("button.dropdown");
 var hamburguerMenuButton = document.querySelector("button.hamburguer-menu-button");
 var monthYearSwitch = document.querySelector("input#month-year-switch");
@@ -138,19 +137,19 @@ var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
 dropdownLinksArrows.forEach(function (link) {
   link.addEventListener("click", function (event) {
     var menu = this.parentNode.parentNode.querySelector("ul.dropdown-anchor-menus");
+    link.isActive = !link.isActive;
     var getMaxHeight = function getMaxHeight(element) {
       element.style.height = "max-content";
       var maxHeight = element.offsetHeight;
       element.style.height = "0px";
       return maxHeight;
     };
-    link.isActive = !link.isActive;
     var startTransition = function startTransition(element, maxHeight) {
-      link.style.pointerEvents = 'none';
+      link.style.pointerEvents = "none";
       var elementHeight = element.style.height;
-      var numberHeight = elementHeight.slice(0, elementHeight.indexOf('p'));
+      var numberHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
       if (numberHeight >= maxHeight) {
-        link.style.pointerEvents = 'all';
+        link.style.pointerEvents = "all";
         return;
       }
       var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
@@ -160,14 +159,14 @@ dropdownLinksArrows.forEach(function (link) {
       });
     };
     var reverseTransition = function reverseTransition(element) {
-      link.style.pointerEvents = 'none';
+      link.style.pointerEvents = "none";
       var height = element.style.height;
-      var numberHeight = height.slice(0, height.indexOf('p'));
+      var numberHeight = height.slice(0, height.indexOf("p"));
       if (numberHeight <= 5) {
-        link.style.pointerEvents = 'all';
+        link.style.pointerEvents = "all";
         return;
       }
-      element.style.height = Number(numberHeight) - 10 + 'px';
+      element.style.height = Number(numberHeight) - 10 + "px";
       requestAnimationFrame(function () {
         reverseTransition(element);
       });
@@ -181,26 +180,25 @@ dropdownLinksArrows.forEach(function (link) {
     }
   });
 });
-
-//FIXME: PLEASE JUST FUCKING FIX THIS BULLSHIT
-
-productButton.addEventListener("click", function (event) {
-  event.stopPropagation();
-  var aside = document.querySelector("#product-aside");
-  aside.isActive = aside.style.display === "flex";
-  aside.style.display = aside.isActive ? "none" : "flex";
-});
-templatesButton.addEventListener("click", function (event) {
-  event.stopPropagation();
-  var aside = document.querySelector("aside#templates-aside");
-  aside.isActive = aside.style.display === "flex";
-  aside.style.display = aside.isActive ? "none" : "flex";
-});
-bonsaiWorkflowButton.addEventListener("click", function (event) {
-  event.stopPropagation();
-  var aside = document.querySelector("#bonsai-workflow-aside");
-  aside.isActive = aside.style.display === "flex";
-  aside.style.display = aside.isActive ? "none" : "flex";
+var buttonAsides = [{
+  productButton: productButton,
+  aside: document.querySelector("#product-aside")
+}, {
+  templatesButton: templatesButton,
+  aside: document.querySelector("aside#templates-aside")
+}, {
+  bonsaiWorkflowButton: bonsaiWorkflowButton,
+  aside: document.querySelector("#bonsai-workflow-aside")
+}];
+var setEventListener = function setEventListener(button, aside) {
+  button.addEventListener("click", function (event) {
+    event.stopPropagation();
+    aside.isActive = aside.style.display === "flex";
+    aside.style.display = aside.isActive ? "none" : "flex";
+  });
+};
+buttonAsides.forEach(function (object) {
+  setEventListener(Object.values(object)[0], object.aside);
 });
 monthYearSwitch.addEventListener("change", function (event) {
   var billedYearly = document.querySelectorAll("section.billed-yearly");
@@ -231,7 +229,7 @@ monthYearSwitch.addEventListener("change", function (event) {
     trialPriceSection.forEach(function (section) {
       section.style.height = "110px";
     });
-    for (var i = 0; i < 3; i++) {
+    for (var i in yearlyValues) {
       moneySpans[i].innerText = yearlyValues[i];
     }
   };
@@ -256,7 +254,7 @@ monthYearSwitch.addEventListener("change", function (event) {
     trialPriceSection.forEach(function (section) {
       section.style.height = "90px";
     });
-    for (var i = 0; i < 3; i++) {
+    for (var i in monthlyValues) {
       moneySpans[i].innerText = monthlyValues[i];
     }
   };
@@ -267,7 +265,7 @@ monthYearSwitch.addEventListener("change", function (event) {
   }
 });
 
-//TODO: clean this sht
+//TODO: clean this sht pls
 hamburguerMenuButton.addEventListener("click", function () {
   var asideMenu = this.parentNode.querySelector("aside#hamburguer-menu");
   asideMenu.isActive = asideMenu.style.transform === "translateX(0%)";
@@ -319,11 +317,15 @@ hamburguerMenuButton.addEventListener("click", function () {
       setButtonDisabledState(false);
     }, 500);
   };
+  var toggleMenuVisibility = function toggleMenuVisibility(menu, state) {
+    var visibilityState = state ? "translateX(100%)" : "translateX(0%)";
+    menu.style.transform = visibilityState;
+  };
   if (asideMenu.isActive) {
-    asideMenu.style.transform = "translateX(100%)";
+    toggleMenuVisibility(asideMenu, true);
     setHamburguerButton();
   } else {
-    asideMenu.style.transform = "translateX(0%)";
+    toggleMenuVisibility(asideMenu, false);
     setXButton();
   }
 });
@@ -331,7 +333,6 @@ dropdownButtons.forEach(function (button) {
   button.addEventListener("click", function () {
     var parentArticle = this.parentNode;
     var asideMenu = parentArticle.querySelector("aside");
-    console.log(asideMenu.style.display);
     var isActive = asideMenu.style.display === "block" ? true : false;
     if (isActive) {
       asideMenu.style.display = "none";
@@ -365,7 +366,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50160" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57779" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

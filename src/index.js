@@ -1,22 +1,12 @@
 "use strict";
 
-//TODO: finish dropdown links at footer;
-
 const dropdownButtons = document.querySelectorAll("button.dropdown");
-const hamburguerMenuButton = document.querySelector(
-    "button.hamburguer-menu-button"
-);
+const hamburguerMenuButton = document.querySelector("button.hamburguer-menu-button");
 const monthYearSwitch = document.querySelector("input#month-year-switch");
 const superChargeSubtitle = document.querySelector("article#sub-title > h2");
-const addOnsContainer = document.querySelector(
-    "section#add-ons-article-container"
-);
-const monthYearTrialPrice = document.querySelectorAll(
-    "div.month-year-trial-price"
-);
-const bonsaiTaxPricingTag = document.querySelector(
-    "div#bonsai-tax-pricing-tag"
-);
+const addOnsContainer = document.querySelector("section#add-ons-article-container");
+const monthYearTrialPrice = document.querySelectorAll("div.month-year-trial-price");
+const bonsaiTaxPricingTag = document.querySelector("div#bonsai-tax-pricing-tag");
 const partnersPricingTag = document.querySelector("div#partners-pricing-tag");
 const bonsaiTaxAccounting = document.querySelector("h3#bonsai-tax-accounting");
 const manageTrackExpenses = document.querySelector("p#manage-track-expenses");
@@ -27,9 +17,8 @@ const dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
 
 dropdownLinksArrows.forEach((link) => {
     link.addEventListener("click", function (event) {
-        const menu = this.parentNode.parentNode.querySelector(
-            "ul.dropdown-anchor-menus"
-        );
+        const menu = this.parentNode.parentNode.querySelector("ul.dropdown-anchor-menus");
+        link.isActive = !link.isActive;
 
         const getMaxHeight = (element) => {
             element.style.height = "max-content";
@@ -38,20 +27,15 @@ dropdownLinksArrows.forEach((link) => {
             return maxHeight;
         };
 
-        link.isActive = !link.isActive
-
         const startTransition = (element, maxHeight) => {
-            link.style.pointerEvents = 'none'
+            link.style.pointerEvents = "none";
             const elementHeight = element.style.height;
-            const numberHeight = elementHeight.slice(0, elementHeight.indexOf('p'))
+            const numberHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
             if (numberHeight >= maxHeight) {
-                link.style.pointerEvents = 'all'
+                link.style.pointerEvents = "all";
                 return;
             }
-            const slicedHeight = elementHeight.slice(
-                0,
-                elementHeight.indexOf("p")
-            );
+            const slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
             element.style.height = Number(slicedHeight) + 10 + "px";
             requestAnimationFrame(() => {
                 startTransition(element, maxHeight);
@@ -59,21 +43,21 @@ dropdownLinksArrows.forEach((link) => {
         };
 
         const reverseTransition = (element) => {
-            link.style.pointerEvents = 'none'
-            const height = element.style.height
-            const numberHeight = height.slice(0, height.indexOf('p'))
+            link.style.pointerEvents = "none";
+            const height = element.style.height;
+            const numberHeight = height.slice(0, height.indexOf("p"));
             if (numberHeight <= 5) {
-                link.style.pointerEvents = 'all'
+                link.style.pointerEvents = "all";
                 return;
             }
-            element.style.height = Number(numberHeight) - 10 + 'px'
+            element.style.height = Number(numberHeight) - 10 + "px";
             requestAnimationFrame(() => {
-                reverseTransition(element)
+                reverseTransition(element);
             });
         };
 
         if (!link.isActive) {
-            reverseTransition(menu)
+            reverseTransition(menu);
         } else {
             window.requestAnimationFrame(() => {
                 startTransition(menu, getMaxHeight(menu));
@@ -82,27 +66,31 @@ dropdownLinksArrows.forEach((link) => {
     });
 });
 
-//FIXME: PLEASE JUST FUCKING FIX THIS BULLSHIT
+const buttonAsides = [
+    {
+        productButton,
+        aside: document.querySelector("#product-aside"),
+    },
+    {
+        templatesButton,
+        aside: document.querySelector("aside#templates-aside"),
+    },
+    {
+        bonsaiWorkflowButton,
+        aside: document.querySelector("#bonsai-workflow-aside"),
+    },
+];
 
-productButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    const aside = document.querySelector("#product-aside");
-    aside.isActive = aside.style.display === "flex";
-    aside.style.display = aside.isActive ? "none" : "flex";
-});
+const setEventListener = (button, aside) => {
+    button.addEventListener("click", function (event) {
+        event.stopPropagation()
+        aside.isActive = aside.style.display === "flex";
+        aside.style.display = aside.isActive ? "none" : "flex";
+    });
+}
 
-templatesButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    const aside = document.querySelector("aside#templates-aside");
-    aside.isActive = aside.style.display === "flex";
-    aside.style.display = aside.isActive ? "none" : "flex";
-});
-
-bonsaiWorkflowButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    const aside = document.querySelector("#bonsai-workflow-aside");
-    aside.isActive = aside.style.display === "flex";
-    aside.style.display = aside.isActive ? "none" : "flex";
+buttonAsides.forEach(object => {
+    setEventListener(Object.values(object)[0], object.aside)
 });
 
 monthYearSwitch.addEventListener("change", function (event) {
@@ -126,8 +114,7 @@ monthYearSwitch.addEventListener("change", function (event) {
         bonsaiTaxPricingTag.innerText = "$100";
         partnersPricingTag.innerText = "$90";
         bonsaiTaxAccounting.innerText = "Accounting & Tax Assistant";
-        manageTrackExpenses.innerText =
-            "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
+        manageTrackExpenses.innerText = "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
 
         monthYearTrialPrice.forEach((div) => {
             div.innerText = "/YEAR";
@@ -136,11 +123,12 @@ monthYearSwitch.addEventListener("change", function (event) {
         billedYearly.forEach((section) => {
             section.style.display = "flex";
         });
+
         trialPriceSection.forEach((section) => {
             section.style.height = "110px";
         });
 
-        for (let i = 0; i < 3; i++) {
+        for (const i in yearlyValues) {
             moneySpans[i].innerText = yearlyValues[i];
         }
     };
@@ -156,8 +144,7 @@ monthYearSwitch.addEventListener("change", function (event) {
         bonsaiTaxPricingTag.innerText = "$10";
         partnersPricingTag.innerText = "$9";
         bonsaiTaxAccounting.innerText = "Bonsai Tax";
-        manageTrackExpenses.innerText =
-            "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
+        manageTrackExpenses.innerText = "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
 
         monthYearTrialPrice.forEach((div) => {
             div.innerText = "/MONTH";
@@ -166,11 +153,12 @@ monthYearSwitch.addEventListener("change", function (event) {
         billedYearly.forEach((section) => {
             section.style.display = "none";
         });
+
         trialPriceSection.forEach((section) => {
             section.style.height = "90px";
         });
 
-        for (let i = 0; i < 3; i++) {
+        for (const i in monthlyValues) {
             moneySpans[i].innerText = monthlyValues[i];
         }
     };
@@ -182,7 +170,7 @@ monthYearSwitch.addEventListener("change", function (event) {
     }
 });
 
-//TODO: clean this sht
+//TODO: clean this sht pls
 hamburguerMenuButton.addEventListener("click", function () {
     const asideMenu = this.parentNode.querySelector("aside#hamburguer-menu");
     asideMenu.isActive = asideMenu.style.transform === "translateX(0%)";
@@ -194,9 +182,7 @@ hamburguerMenuButton.addEventListener("click", function () {
 
     const hideInnerMenus = () => {
         const productsAside = document.querySelector("aside#product-aside");
-        const workflowAside = document.querySelector(
-            "aside#bonsai-workflow-aside"
-        );
+        const workflowAside = document.querySelector("aside#bonsai-workflow-aside");
         const templatesAside = document.querySelector("aside#templates-aside");
 
         for (const aside of [productsAside, workflowAside, templatesAside]) {
@@ -214,12 +200,15 @@ hamburguerMenuButton.addEventListener("click", function () {
         spans.first.style.top = "10.5px";
         spans.second.style.backgroundColor = "transparent";
         spans.third.style.bottom = "10.5px";
+
         setTimeout(() => {
             spans.first.style.transform = "rotate(45deg)";
         }, delay);
+
         setTimeout(() => {
             spans.third.style.transform = "rotate(-45deg)";
         }, delay);
+
         setTimeout(() => {
             setButtonDisabledState(false);
         }, 500);
@@ -231,21 +220,28 @@ hamburguerMenuButton.addEventListener("click", function () {
         const delay = 200;
         spans.first.style.transform = "rotate(0deg)";
         spans.third.style.transform = "rotate(0deg)";
+
         setTimeout(() => {
             spans.first.style.top = "0px";
             spans.second.style.backgroundColor = "#4c4d5f";
             spans.third.style.bottom = "0px";
         }, delay);
+
         setTimeout(() => {
             setButtonDisabledState(false);
         }, 500);
     };
 
+    const toggleMenuVisibility = (menu, state) => {
+        const visibilityState = state ? "translateX(100%)" : "translateX(0%)"
+        menu.style.transform = visibilityState
+    }
+
     if (asideMenu.isActive) {
-        asideMenu.style.transform = "translateX(100%)";
+        toggleMenuVisibility(asideMenu, true)
         setHamburguerButton();
     } else {
-        asideMenu.style.transform = "translateX(0%)";
+        toggleMenuVisibility(asideMenu, false)
         setXButton();
     }
 });
@@ -254,7 +250,6 @@ dropdownButtons.forEach((button) => {
     button.addEventListener("click", function () {
         const parentArticle = this.parentNode;
         const asideMenu = parentArticle.querySelector("aside");
-        console.log(asideMenu.style.display);
         const isActive = asideMenu.style.display === "block" ? true : false;
         if (isActive) {
             asideMenu.style.display = "none";

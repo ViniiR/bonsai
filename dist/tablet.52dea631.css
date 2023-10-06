@@ -1,0 +1,78 @@
+main section#plans-pricing {
+  flex-direction: row;
+  justify-content: center;
+  height: max-content;
+  max-width: fit-content;
+  margin-bottom: 50px;
+}
+main section#plans-pricing h2 {
+  width: max-content;
+  padding: 0;
+  white-space: nowrap;
+}
+main section#plans-pricing section#months-free-switch {
+  max-width: 300px;
+  height: 60px;
+}
+main section#plans-pricing section#months-free-switch div#free-2-months {
+  width: 100%;
+}
+main section#plans-pricing section#months-free-switch div#monthly-switch {
+  gap: 20px;
+  width: max-content;
+}
+
+@media (min-width: 490px) {
+  main > section#plans-pricing {
+    width: 80%;
+    gap: 30px;
+  }
+  main > section#plans-pricing section#months-free-switch div#monthly-switch {
+    margin-right: 10px;
+  }
+  main > section#your-business-section {
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  main > section#your-business-section p {
+    height: max-content;
+  }
+}
+@media (min-width: 768px) {
+  main > section#plans-pricing {
+    gap: 50px;
+    align-items: end;
+  }
+  main > section#plans-pricing h2 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  main > section#plans-pricing section#months-free-switch div#monthly-switch {
+    margin-right: 10px;
+  }
+  main > section.super-charge > article#sub-title h2 {
+    font-size: 1.7rem;
+  }
+  main > section.super-charge > section#add-ons-article-container > article.add-ons-article {
+    width: 90%;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+  }
+  main > section.super-charge > section#add-ons-article-container > article.add-ons-article > h2 {
+    height: 60px;
+    font-size: 1.9rem;
+    width: 90px;
+  }
+  main > section.super-charge > section#add-ons-article-container > article.add-ons-article > section.trial-price2 {
+    width: 90px;
+  }
+  main > section#your-business-section {
+    background-color: #f2faff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #f2faff;
+  }
+}
+
+/*# sourceMappingURL=/tablet.52dea631.css.map */

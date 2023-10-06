@@ -117,6 +117,7 @@ header section.sticky-container > section > section#img-logo-container {
 }
 header button.hamburguer-menu-button {
   cursor: pointer;
+  background-color: transparent;
   border: none;
   height: 25px;
   width: 40px;
@@ -548,7 +549,8 @@ main section#your-business-section {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 300px;
+  margin: 100px 0px;
 }
 main section#your-business-section > p {
   height: 60%;
@@ -590,6 +592,7 @@ main section.frequent-questions article {
   flex-flow: column nowrap;
 }
 main section.frequent-questions article button.dropdown {
+  background-color: transparent;
   cursor: pointer;
   font-size: 1.5rem;
   text-align: start;
