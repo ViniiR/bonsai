@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel index.html",
+    "start": "tsc --watch",
     "build": "parcel build index.html"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
-    "sass": "^1.68.0"
+    "sass": "^1.68.0",
+    "typescript": "^5.2.2"
   }
 }
