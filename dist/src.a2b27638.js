@@ -134,48 +134,72 @@ var productButton = document.querySelector("#product-button");
 var bonsaiWorkflowButton = document.querySelector("#bonsai-workflow-button");
 var templatesButton = document.querySelector("#templates-button");
 var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
+function setBackgroundShadow(event) {
+  if (window.innerWidth <= 425) return;
+  var backgroundShadow = document.querySelector('div#background-shadow');
+  var percentage = window.innerWidth / 22;
+  var background = "linear-gradient(65deg, white ".concat(100 - percentage, "%, #f2faff ").concat(percentage, "%)");
+  backgroundShadow.style.backgroundImage = background;
+}
+setBackgroundShadow();
+window.addEventListener("resize", setBackgroundShadow);
+var updateHeaderBackgroundColor = function updateHeaderBackgroundColor(event) {
+  var headerStickyContainer = document.querySelector('section.sticky-container');
+  var scrollThreshold = 20;
+  var scrollTop = window.scrollY;
+  if (scrollTop >= scrollThreshold) {
+    headerStickyContainer.style.backgroundColor = 'white';
+  } else {
+    headerStickyContainer.style.backgroundColor = 'transparent';
+  }
+};
+updateHeaderBackgroundColor();
+window.addEventListener('scroll', updateHeaderBackgroundColor);
+
+//TODO: REMOVE ALL CLOJURES =, YOU DONT EVEN KNOW WHAT IT MEANS
+
+var getMaxHeight = function getMaxHeight(element) {
+  element.style.height = "max-content";
+  var maxHeight = element.offsetHeight;
+  element.style.height = "0px";
+  return maxHeight;
+};
+var startTransition = function startTransition(link, element, maxHeight) {
+  link.style.pointerEvents = "none";
+  var elementHeight = element.style.height;
+  var numberHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
+  if (numberHeight >= maxHeight) {
+    link.style.pointerEvents = "all";
+    return;
+  }
+  var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
+  element.style.height = Number(slicedHeight) + 10 + "px";
+  requestAnimationFrame(function () {
+    startTransition(link, element, maxHeight);
+  });
+};
+var reverseTransition = function reverseTransition(link, element) {
+  link.style.pointerEvents = "none";
+  var height = element.style.height;
+  var numberHeight = height.slice(0, height.indexOf("p"));
+  if (numberHeight <= 5) {
+    link.style.pointerEvents = "all";
+    return;
+  }
+  element.style.height = Number(numberHeight) - 10 + "px";
+  requestAnimationFrame(function () {
+    reverseTransition(link, element);
+  });
+};
 dropdownLinksArrows.forEach(function (link) {
   link.addEventListener("click", function (event) {
     var menu = this.parentNode.parentNode.querySelector("ul.dropdown-anchor-menus");
     link.isActive = !link.isActive;
-    var getMaxHeight = function getMaxHeight(element) {
-      element.style.height = "max-content";
-      var maxHeight = element.offsetHeight;
-      element.style.height = "0px";
-      return maxHeight;
-    };
-    var startTransition = function startTransition(element, maxHeight) {
-      link.style.pointerEvents = "none";
-      var elementHeight = element.style.height;
-      var numberHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
-      if (numberHeight >= maxHeight) {
-        link.style.pointerEvents = "all";
-        return;
-      }
-      var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
-      element.style.height = Number(slicedHeight) + 10 + "px";
-      requestAnimationFrame(function () {
-        startTransition(element, maxHeight);
-      });
-    };
-    var reverseTransition = function reverseTransition(element) {
-      link.style.pointerEvents = "none";
-      var height = element.style.height;
-      var numberHeight = height.slice(0, height.indexOf("p"));
-      if (numberHeight <= 5) {
-        link.style.pointerEvents = "all";
-        return;
-      }
-      element.style.height = Number(numberHeight) - 10 + "px";
-      requestAnimationFrame(function () {
-        reverseTransition(element);
-      });
-    };
     if (!link.isActive) {
-      reverseTransition(menu);
+      reverseTransition(link, menu);
     } else {
       window.requestAnimationFrame(function () {
-        startTransition(menu, getMaxHeight(menu));
+        startTransition(link, menu, getMaxHeight(menu));
       });
     }
   });
@@ -200,6 +224,56 @@ var setEventListener = function setEventListener(button, aside) {
 buttonAsides.forEach(function (object) {
   setEventListener(Object.values(object)[0], object.aside);
 });
+var setYearly = function setYearly(spans, billedYearly, trialPriceSection, moneySpans) {
+  var yearlyValues = [17, 32, 52];
+  spans.monthly.style.fontWeight = "normal";
+  spans.monthly.style.color = "#8e8f98";
+  spans.yearly.style.fontWeight = "bold";
+  spans.yearly.style.color = "#4c4d5f";
+  superChargeSubtitle.innerText = "Customize your workflow with add-ons";
+  addOnsContainer.style.flexDirection = "column-reverse";
+  bonsaiTaxPricingTag.innerText = "$100";
+  partnersPricingTag.innerText = "$90";
+  bonsaiTaxAccounting.innerText = "Accounting & Tax Assistant";
+  manageTrackExpenses.innerText = "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
+  monthYearTrialPrice.forEach(function (div) {
+    div.innerText = "/YEAR";
+  });
+  billedYearly.forEach(function (section) {
+    section.style.display = "flex";
+  });
+  trialPriceSection.forEach(function (section) {
+    section.style.height = "110px";
+  });
+  for (var i in yearlyValues) {
+    moneySpans[i].innerText = yearlyValues[i];
+  }
+};
+var setMonthly = function setMonthly(spans, billedYearly, trialPriceSection, moneySpans) {
+  var monthlyValues = [24, 39, 79];
+  spans.monthly.style.fontWeight = "bold";
+  spans.monthly.style.color = "#4c4d5f";
+  spans.yearly.style.fontWeight = "normal";
+  spans.yearly.style.color = "#8e8f98";
+  superChargeSubtitle.innerText = "Super charge your work with add-ons";
+  addOnsContainer.style.flexDirection = "column";
+  bonsaiTaxPricingTag.innerText = "$10";
+  partnersPricingTag.innerText = "$9";
+  bonsaiTaxAccounting.innerText = "Bonsai Tax";
+  manageTrackExpenses.innerText = "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
+  monthYearTrialPrice.forEach(function (div) {
+    div.innerText = "/MONTH";
+  });
+  billedYearly.forEach(function (section) {
+    section.style.display = "none";
+  });
+  trialPriceSection.forEach(function (section) {
+    section.style.height = "90px";
+  });
+  for (var i in monthlyValues) {
+    moneySpans[i].innerText = monthlyValues[i];
+  }
+};
 monthYearSwitch.addEventListener("change", function (event) {
   var billedYearly = document.querySelectorAll("section.billed-yearly");
   var trialPriceSection = document.querySelectorAll("section.trial-price");
@@ -208,125 +282,73 @@ monthYearSwitch.addEventListener("change", function (event) {
     monthly: document.querySelector("span#monthly"),
     yearly: document.querySelector("span#yearly")
   };
-  var setYearly = function setYearly() {
-    var yearlyValues = [17, 32, 52];
-    spans.monthly.style.fontWeight = "normal";
-    spans.monthly.style.color = "#8e8f98";
-    spans.yearly.style.fontWeight = "bold";
-    spans.yearly.style.color = "#4c4d5f";
-    superChargeSubtitle.innerText = "Customize your workflow with add-ons";
-    addOnsContainer.style.flexDirection = "column-reverse";
-    bonsaiTaxPricingTag.innerText = "$100";
-    partnersPricingTag.innerText = "$90";
-    bonsaiTaxAccounting.innerText = "Accounting & Tax Assistant";
-    manageTrackExpenses.innerText = "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
-    monthYearTrialPrice.forEach(function (div) {
-      div.innerText = "/YEAR";
-    });
-    billedYearly.forEach(function (section) {
-      section.style.display = "flex";
-    });
-    trialPriceSection.forEach(function (section) {
-      section.style.height = "110px";
-    });
-    for (var i in yearlyValues) {
-      moneySpans[i].innerText = yearlyValues[i];
-    }
-  };
-  var setMonthly = function setMonthly() {
-    var monthlyValues = [24, 39, 79];
-    spans.monthly.style.fontWeight = "bold";
-    spans.monthly.style.color = "#4c4d5f";
-    spans.yearly.style.fontWeight = "normal";
-    spans.yearly.style.color = "#8e8f98";
-    superChargeSubtitle.innerText = "Super charge your work with add-ons";
-    addOnsContainer.style.flexDirection = "column";
-    bonsaiTaxPricingTag.innerText = "$10";
-    partnersPricingTag.innerText = "$9";
-    bonsaiTaxAccounting.innerText = "Bonsai Tax";
-    manageTrackExpenses.innerText = "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
-    monthYearTrialPrice.forEach(function (div) {
-      div.innerText = "/MONTH";
-    });
-    billedYearly.forEach(function (section) {
-      section.style.display = "none";
-    });
-    trialPriceSection.forEach(function (section) {
-      section.style.height = "90px";
-    });
-    for (var i in monthlyValues) {
-      moneySpans[i].innerText = monthlyValues[i];
-    }
-  };
   if (event.target.checked) {
-    setYearly();
+    setYearly(spans, billedYearly, trialPriceSection, moneySpans);
   } else {
-    setMonthly();
+    setMonthly(spans, billedYearly, trialPriceSection, moneySpans);
   }
 });
-
-//TODO: clean this sht pls
+var toggleMenuVisibility = function toggleMenuVisibility(menu, state) {
+  var visibilityState = state ? "translateX(100%)" : "translateX(0%)";
+  menu.style.transform = visibilityState;
+};
+var hideInnerMenus = function hideInnerMenus() {
+  var productsAside = document.querySelector("aside#product-aside");
+  var workflowAside = document.querySelector("aside#bonsai-workflow-aside");
+  var templatesAside = document.querySelector("aside#templates-aside");
+  for (var _i = 0, _arr = [productsAside, workflowAside, templatesAside]; _i < _arr.length; _i++) {
+    var aside = _arr[_i];
+    aside.style.display = "none";
+  }
+};
+var setButtonDisabledState = function setButtonDisabledState(state) {
+  hamburguerMenuButton.disabled = state;
+};
+var setXButton = function setXButton(spans) {
+  setButtonDisabledState(true);
+  var delay = 200;
+  spans.first.style.top = "10.5px";
+  spans.second.style.backgroundColor = "transparent";
+  spans.third.style.bottom = "10.5px";
+  setTimeout(function () {
+    spans.first.style.transform = "rotate(45deg)";
+  }, delay);
+  setTimeout(function () {
+    spans.third.style.transform = "rotate(-45deg)";
+  }, delay);
+  setTimeout(function () {
+    setButtonDisabledState(false);
+  }, 500);
+};
+var setHamburguerButton = function setHamburguerButton(spans) {
+  hideInnerMenus();
+  setButtonDisabledState(true);
+  var delay = 200;
+  spans.first.style.transform = "rotate(0deg)";
+  spans.third.style.transform = "rotate(0deg)";
+  setTimeout(function () {
+    spans.first.style.top = "0px";
+    spans.second.style.backgroundColor = "#4c4d5f";
+    spans.third.style.bottom = "0px";
+  }, delay);
+  setTimeout(function () {
+    setButtonDisabledState(false);
+  }, 500);
+};
 hamburguerMenuButton.addEventListener("click", function () {
-  var asideMenu = this.parentNode.querySelector("aside#hamburguer-menu");
+  var asideMenu = document.querySelector("aside#hamburguer-menu");
   asideMenu.isActive = asideMenu.style.transform === "translateX(0%)";
   var spans = {
     first: hamburguerMenuButton.querySelector("span#first-span"),
     second: hamburguerMenuButton.querySelector("span#second-span"),
     third: hamburguerMenuButton.querySelector("span#third-span")
   };
-  var hideInnerMenus = function hideInnerMenus() {
-    var productsAside = document.querySelector("aside#product-aside");
-    var workflowAside = document.querySelector("aside#bonsai-workflow-aside");
-    var templatesAside = document.querySelector("aside#templates-aside");
-    for (var _i = 0, _arr = [productsAside, workflowAside, templatesAside]; _i < _arr.length; _i++) {
-      var aside = _arr[_i];
-      aside.style.display = "none";
-    }
-  };
-  var setButtonDisabledState = function setButtonDisabledState(state) {
-    hamburguerMenuButton.disabled = state;
-  };
-  var setXButton = function setXButton() {
-    setButtonDisabledState(true);
-    var delay = 200;
-    spans.first.style.top = "10.5px";
-    spans.second.style.backgroundColor = "transparent";
-    spans.third.style.bottom = "10.5px";
-    setTimeout(function () {
-      spans.first.style.transform = "rotate(45deg)";
-    }, delay);
-    setTimeout(function () {
-      spans.third.style.transform = "rotate(-45deg)";
-    }, delay);
-    setTimeout(function () {
-      setButtonDisabledState(false);
-    }, 500);
-  };
-  var setHamburguerButton = function setHamburguerButton() {
-    hideInnerMenus();
-    setButtonDisabledState(true);
-    var delay = 200;
-    spans.first.style.transform = "rotate(0deg)";
-    spans.third.style.transform = "rotate(0deg)";
-    setTimeout(function () {
-      spans.first.style.top = "0px";
-      spans.second.style.backgroundColor = "#4c4d5f";
-      spans.third.style.bottom = "0px";
-    }, delay);
-    setTimeout(function () {
-      setButtonDisabledState(false);
-    }, 500);
-  };
-  var toggleMenuVisibility = function toggleMenuVisibility(menu, state) {
-    var visibilityState = state ? "translateX(100%)" : "translateX(0%)";
-    menu.style.transform = visibilityState;
-  };
   if (asideMenu.isActive) {
     toggleMenuVisibility(asideMenu, true);
-    setHamburguerButton();
+    setHamburguerButton(spans);
   } else {
     toggleMenuVisibility(asideMenu, false);
-    setXButton();
+    setXButton(spans);
   }
 });
 dropdownButtons.forEach(function (button) {
@@ -366,7 +388,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57779" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57534" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

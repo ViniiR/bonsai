@@ -108,8 +108,8 @@ header {
         width: inherit;
         height: inherit;
         position: fixed;
-        background-color: white;
         z-index: 100;
+        transition: background-color linear .3s;
         > section {
             display: flex;
             flex-flow: row wrap;
@@ -220,6 +220,7 @@ header {
                     &#login {
                         border: 1px solid $maingreen ;
                         color: $maingreen;
+                        background-color: transparent;
                         &:hover {
                             background-color: $maingreen;
                             color: white;
@@ -256,102 +257,70 @@ main {
             font-weight: lighter;
             padding-left: 10px;
             font-size: 1.4rem;
+            height: 70px;
         }
         section#months-free-switch {
             height: 60%;
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
-            div {
+            div#monthly-switch {
                 width: 80%;
                 font-size: 1.1rem;
-                &#free-2-months {
-                    text-align: end;
-                    color: $maingreen;
-                    font-weight: bold;
-                    font-size: .9rem;
-                    position: relative;
-                    div#curved-arrow {
-                        width: 50px;
-                        height: 50px;
-                        position: absolute;
-                        top: 0px;
-                        right: -19px;
-                        border-radius: 50px;
-                        border: 3px dashed $maingreen;
-                        box-sizing: border-box;
-                        z-index: -11;
-                        div#parasite {
-                            width: 40px;
-                            height: 55px;
-                            background-color: white;
-                            position: absolute;
-                            z-index: -10;
-                            top: -5px;
-                            left: -5px;
-                            &::after {
-                                content: '';
-                                position: absolute;
-                                width: 15px;
-                                height: 15px;
-                                top: 42.5px;
-                                right: -5px;
-                                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 24 24' style='fill: rgba(0, 178, 137, 1);'%3E%3Cpath d='M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z'%3E%3C/path%3E%3C/svg%3E");
-                                transform: rotate(45deg);
-                            }
-                        }
+                display: flex;
+                height: 40px;
+                margin-top: 10px;
+                flex-flow: row nowrap;
+                justify-content: space-around;
+                position: relative;
+                align-items: center;
+                #img-wrapper {
+                    position: absolute;
+                    top: -25px;
+                    right: -20px;
+                }
+                span {
+                    transition: font-weight linear .1s, color linear .1s;
+                    &#monthly {
+                        font-weight: bold;
+                    }
+                    &#yearly {
+                        color: #8e8f98;
                     }
                 }
-                &#monthly-switch {
+                
+                span#input-wrapper {
                     display: flex;
-                    height: 40px;
-                    margin-top: 10px;
-                    flex-flow: row nowrap;
-                    justify-content: space-around;
+                    height: 100%;
+                    flex-flow: column nowrap;
+                    justify-content: center;
                     align-items: center;
-                    span {
-                        transition: font-weight linear .1s, color linear .1s;
-                        &#monthly {
-                            font-weight: bold;
-                        }
-                        &#yearly {
-                            color: #8e8f98;
+                    position: relative;
+                    & , & * {
+                        cursor: pointer;
+                    }
+                    &::after {
+                        content: '';
+                        width: 25px;
+                        height: 25px;
+                        position: absolute;
+                        left: 3px;
+                        border-radius: 50px;
+                        background-color: white;
+                        pointer-events: none;
+                        transition: left linear .1s;
+                    }
+                    &:has(input#month-year-switch:checked) {
+                        &::after {
+                            left: 22px;
                         }
                     }
-                    
-                    span#input-wrapper {
-                        display: flex;
-                        height: 100%;
-                        flex-flow: column nowrap;
-                        justify-content: center;
-                        align-items: center;
-                        position: relative;
-                        & , & * {
-                            cursor: pointer;
-                        }
-                        &::after {
-                            content: '';
-                            width: 25px;
-                            height: 25px;
-                            position: absolute;
-                            left: 3px;
-                            border-radius: 50px;
-                            background-color: white;
-                            pointer-events: none;
-                            transition: left linear .1s;
-                        }
-                        &:has(input#month-year-switch:checked) {
-                            &::after {
-                                left: 22px;
-                            }
-                        }
-                        input#month-year-switch {
-                            appearance: none;
-                            height: 30px;
-                            width: 50px;
-                            background-color: $maingreen;
-                            border-radius: 20px;
-                        }
+                    input#month-year-switch {
+                        appearance: none;
+                        height: 30px;
+                        width: 50px;
+                        background-color: $maingreen;
+                        border-radius: 20px;
                     }
                 }
             }
@@ -365,6 +334,7 @@ main {
         height: max-content;
         width: 75%;
         overflow: hidden;
+        background-color: white;
         position: relative;
         article.trial-plans {
             height: 100%;
