@@ -117,62 +117,88 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+})({"dest/year-month-switch.js":[function(require,module,exports) {
+"use strict";
+
+var monthYearSwitch = document.querySelector("input#month-year-switch");
+var superChargeSubtitle = document.querySelector("article#sub-title > h2");
+var addOnsContainer = document.querySelector("section#add-ons-article-container");
+var bonsaiTaxPricingTag = document.querySelector("div#bonsai-tax-pricing-tag");
+var partnersPricingTag = document.querySelector("div#partners-pricing-tag");
+var bonsaiTaxAccounting = document.querySelector("h3#bonsai-tax-accounting");
+var manageTrackExpenses = document.querySelector("p#manage-track-expenses");
+var monthYearTrialPrice = document.querySelectorAll("div.month-year-trial-price");
+var setYearly = function setYearly(spans, billedYearly, trialPriceSection, moneySpans) {
+  if (superChargeSubtitle === null || addOnsContainer === null || bonsaiTaxPricingTag === null || partnersPricingTag === null || bonsaiTaxAccounting === null || manageTrackExpenses === null) return;
+  var yearlyValues = [17, 32, 52];
+  spans.monthly.style.fontWeight = "normal";
+  spans.monthly.style.color = "#8e8f98";
+  spans.yearly.style.fontWeight = "bold";
+  spans.yearly.style.color = "#4c4d5f";
+  superChargeSubtitle.innerText = "Customize your workflow with add-ons";
+  addOnsContainer.style.flexDirection = "column-reverse";
+  bonsaiTaxPricingTag.innerText = "$100";
+  partnersPricingTag.innerText = "$90";
+  bonsaiTaxAccounting.innerText = "Accounting & Tax Assistant";
+  manageTrackExpenses.innerText = "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
+  monthYearTrialPrice.forEach(function (div) {
+    div.innerText = "/YEAR";
+  });
+  billedYearly.forEach(function (section) {
+    section.style.display = "flex";
+  });
+  trialPriceSection.forEach(function (section) {
+    section.style.height = "110px";
+  });
+  for (var i in yearlyValues) {
+    moneySpans[i].innerText = yearlyValues[i].toString();
   }
-  return bundleURL;
-}
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
+};
+var setMonthly = function setMonthly(spans, billedYearly, trialPriceSection, moneySpans) {
+  if (superChargeSubtitle === null || addOnsContainer === null || bonsaiTaxPricingTag === null || partnersPricingTag === null || bonsaiTaxAccounting === null || manageTrackExpenses === null) return;
+  var monthlyValues = [24, 39, 79];
+  spans.monthly.style.fontWeight = "bold";
+  spans.monthly.style.color = "#4c4d5f";
+  spans.yearly.style.fontWeight = "normal";
+  spans.yearly.style.color = "#8e8f98";
+  superChargeSubtitle.innerText = "Super charge your work with add-ons";
+  addOnsContainer.style.flexDirection = "column";
+  bonsaiTaxPricingTag.innerText = "$10";
+  partnersPricingTag.innerText = "$9";
+  bonsaiTaxAccounting.innerText = "Bonsai Tax";
+  manageTrackExpenses.innerText = "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
+  monthYearTrialPrice.forEach(function (div) {
+    div.innerText = "/MONTH";
+  });
+  billedYearly.forEach(function (section) {
+    section.style.display = "none";
+  });
+  trialPriceSection.forEach(function (section) {
+    section.style.height = "90px";
+  });
+  for (var i in monthlyValues) {
+    moneySpans[i].innerText = monthlyValues[i].toString();
   }
-  return '/';
-}
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
+};
+function checkForChange(event) {
+  var billedYearly = document.querySelectorAll("section.billed-yearly");
+  var trialPriceSection = document.querySelectorAll("section.trial-price");
+  var moneySpans = document.querySelectorAll("span.money-span");
+  var spans = {
+    monthly: document.querySelector("span#monthly"),
+    yearly: document.querySelector("span#yearly")
   };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
+  var target = event.target;
+  if (target instanceof HTMLInputElement && target.checked) {
+    setYearly(spans, billedYearly, trialPriceSection, moneySpans);
+  } else {
+    setMonthly(spans, billedYearly, trialPriceSection, moneySpans);
   }
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-    cssTimeout = null;
-  }, 50);
 }
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"scss/tablet.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+if (monthYearSwitch !== null) {
+  monthYearSwitch.addEventListener("change", checkForChange);
+}
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -341,5 +367,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/tablet.52dea631.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/year-month-switch.js"], null)
+//# sourceMappingURL=/year-month-switch.4716879d.js.map

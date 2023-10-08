@@ -199,7 +199,7 @@ header aside#hamburguer-menu > section.menu-container section#login-sign-in-sect
   flex-flow: column nowrap;
   gap: 15px;
 }
-header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button {
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section a {
   cursor: pointer;
   width: 100%;
   border-radius: 5px;
@@ -209,22 +209,24 @@ header aside#hamburguer-menu > section.menu-container section#login-sign-in-sect
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  font-size: 0.8rem;
+  text-decoration: none;
 }
-header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button#login {
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section a#login {
   border: 1px solid #00b289;
   color: #00b289;
   background-color: transparent;
 }
-header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button#login:hover {
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section a#login:hover {
   background-color: #00b289;
   color: white;
 }
-header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button.start-free-button {
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section a.start-free-button {
   border: none;
   background-color: #00b289;
   color: white;
 }
-header aside#hamburguer-menu > section.menu-container section#login-sign-in-section button.start-free-button:hover {
+header aside#hamburguer-menu > section.menu-container section#login-sign-in-section a.start-free-button:hover {
   background-color: #00bc90;
 }
 

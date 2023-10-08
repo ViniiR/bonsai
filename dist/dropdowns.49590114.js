@@ -117,62 +117,75 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-  return bundleURL;
-}
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-  return '/';
-}
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
-  };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
+})({"dest/dropdowns.js":[function(require,module,exports) {
+"use strict";
+
+var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
+var getMaxHeight = function getMaxHeight(element) {
+  element.style.height = "max-content";
+  var maxHeight = element.offsetHeight;
+  element.style.height = "0px";
+  return maxHeight;
+};
+var startTransition = function startTransition(link, element, maxHeight) {
+  link.style.pointerEvents = "none";
+  if (element === null) return;
+  var elementHeight = element.style.height;
+  var numberHeight = Number(elementHeight.slice(0, elementHeight.indexOf("p")));
+  if (numberHeight >= maxHeight) {
+    link.style.pointerEvents = "all";
     return;
   }
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
+  var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
+  element.style.height = Number(slicedHeight) + 10 + "px";
+  requestAnimationFrame(function () {
+    startTransition(link, element, maxHeight);
+  });
+};
+var reverseTransition = function reverseTransition(link, element) {
+  link.style.pointerEvents = "none";
+  if (element === null) return;
+  var height = element.style.height;
+  var numberHeight = Number(height.slice(0, height.indexOf("p")));
+  if (numberHeight <= 5) {
+    link.style.pointerEvents = "all";
+    return;
+  }
+  element.style.height = Number(numberHeight) - 10 + "px";
+  requestAnimationFrame(function () {
+    reverseTransition(link, element);
+  });
+};
+dropdownLinksArrows.forEach(function (link) {
+  link.addEventListener("click", function () {
+    var _link$parentNode;
+    var menu = (_link$parentNode = link.parentNode) === null || _link$parentNode === void 0 || (_link$parentNode = _link$parentNode.parentNode) === null || _link$parentNode === void 0 ? void 0 : _link$parentNode.querySelector("ul.dropdown-anchor-menus");
+    menu.isActive = !menu.isActive;
+    if (!menu.isActive) {
+      reverseTransition(link, menu);
+    } else {
+      window.requestAnimationFrame(function () {
+        startTransition(link, menu, getMaxHeight(menu));
+      });
     }
-    cssTimeout = null;
-  }, 50);
-}
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"scss/tablet.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  });
+});
+var dropdownButtons = document.querySelectorAll("button.dropdown");
+dropdownButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    var parentArticle = button.parentNode;
+    if (parentArticle === null) return;
+    var asideMenu = parentArticle.querySelector("aside");
+    if (asideMenu === null) return;
+    var isActive = asideMenu.style.display === "block" ? true : false;
+    if (isActive) {
+      asideMenu.style.display = "none";
+    } else {
+      asideMenu.style.display = "block";
+    }
+  });
+});
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -341,5 +354,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/tablet.52dea631.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/dropdowns.js"], null)
+//# sourceMappingURL=/dropdowns.49590114.js.map

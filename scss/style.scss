@@ -207,7 +207,8 @@ header {
                 display: flex;
                 flex-flow: column nowrap;
                 gap: 15px;
-                button {
+                //TODO: link styles break when used
+                a {
                     cursor: pointer;
                     width: 100%;
                     border-radius: 5px;
@@ -217,6 +218,8 @@ header {
                     flex-flow: row nowrap;
                     justify-content: center;
                     align-items: center;
+                    font-size: .8rem;
+                    text-decoration: none;
                     &#login {
                         border: 1px solid $maingreen ;
                         color: $maingreen;
