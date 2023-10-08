@@ -117,10 +117,9 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"dest/index.js":[function(require,module,exports) {
+})({"dest/year-month-switch.js":[function(require,module,exports) {
 "use strict";
 
-var hamburguerMenuButton = document.querySelector("button.hamburguer-menu-button");
 var monthYearSwitch = document.querySelector("input#month-year-switch");
 var superChargeSubtitle = document.querySelector("article#sub-title > h2");
 var addOnsContainer = document.querySelector("section#add-ons-article-container");
@@ -128,106 +127,7 @@ var bonsaiTaxPricingTag = document.querySelector("div#bonsai-tax-pricing-tag");
 var partnersPricingTag = document.querySelector("div#partners-pricing-tag");
 var bonsaiTaxAccounting = document.querySelector("h3#bonsai-tax-accounting");
 var manageTrackExpenses = document.querySelector("p#manage-track-expenses");
-var productButton = document.querySelector("#product-button");
-var bonsaiWorkflowButton = document.querySelector("#bonsai-workflow-button");
-var templatesButton = document.querySelector("#templates-button");
-var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
 var monthYearTrialPrice = document.querySelectorAll("div.month-year-trial-price");
-var dropdownButtons = document.querySelectorAll("button.dropdown");
-function setBackgroundShadow() {
-  if (window.innerWidth <= 425) return;
-  var backgroundShadow = document.querySelector('div#background-shadow');
-  var percentage = window.innerWidth / 22;
-  var background = "linear-gradient(65deg, white ".concat(100 - percentage, "%, #f2faff ").concat(percentage, "%)");
-  if (backgroundShadow !== null) {
-    backgroundShadow.style.backgroundImage = background;
-  }
-}
-setBackgroundShadow();
-window.addEventListener("resize", setBackgroundShadow);
-var updateHeaderBackgroundColor = function updateHeaderBackgroundColor() {
-  var headerStickyContainer = document.querySelector('section.sticky-container');
-  var scrollThreshold = 20;
-  var scrollTop = window.scrollY;
-  if (headerStickyContainer === null) return;
-  if (scrollTop >= scrollThreshold) {
-    headerStickyContainer.style.backgroundColor = 'white';
-  } else {
-    headerStickyContainer.style.backgroundColor = 'transparent';
-  }
-};
-updateHeaderBackgroundColor();
-window.addEventListener('scroll', updateHeaderBackgroundColor);
-var getMaxHeight = function getMaxHeight(element) {
-  element.style.height = "max-content";
-  var maxHeight = element.offsetHeight;
-  element.style.height = "0px";
-  return maxHeight;
-};
-var startTransition = function startTransition(link, element, maxHeight) {
-  link.style.pointerEvents = "none";
-  if (element === null) return;
-  var elementHeight = element.style.height;
-  var numberHeight = Number(elementHeight.slice(0, elementHeight.indexOf("p")));
-  if (numberHeight >= maxHeight) {
-    link.style.pointerEvents = "all";
-    return;
-  }
-  var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
-  element.style.height = Number(slicedHeight) + 10 + "px";
-  requestAnimationFrame(function () {
-    startTransition(link, element, maxHeight);
-  });
-};
-var reverseTransition = function reverseTransition(link, element) {
-  link.style.pointerEvents = "none";
-  if (element === null) return;
-  var height = element.style.height;
-  var numberHeight = Number(height.slice(0, height.indexOf("p")));
-  if (numberHeight <= 5) {
-    link.style.pointerEvents = "all";
-    return;
-  }
-  element.style.height = Number(numberHeight) - 10 + "px";
-  requestAnimationFrame(function () {
-    reverseTransition(link, element);
-  });
-};
-dropdownLinksArrows.forEach(function (link) {
-  link.addEventListener("click", function () {
-    var _link$parentNode;
-    var menu = (_link$parentNode = link.parentNode) === null || _link$parentNode === void 0 || (_link$parentNode = _link$parentNode.parentNode) === null || _link$parentNode === void 0 ? void 0 : _link$parentNode.querySelector("ul.dropdown-anchor-menus");
-    menu.isActive = !menu.isActive;
-    if (!menu.isActive) {
-      reverseTransition(link, menu);
-    } else {
-      window.requestAnimationFrame(function () {
-        startTransition(link, menu, getMaxHeight(menu));
-      });
-    }
-  });
-});
-var buttonAsides = [{
-  productButton: productButton,
-  aside: document.querySelector("#product-aside")
-}, {
-  templatesButton: templatesButton,
-  aside: document.querySelector("aside#templates-aside")
-}, {
-  bonsaiWorkflowButton: bonsaiWorkflowButton,
-  aside: document.querySelector("#bonsai-workflow-aside")
-}];
-var setEventListener = function setEventListener(button, aside) {
-  if (button === null || aside === null) return;
-  button.addEventListener("click", function (event) {
-    event.stopPropagation();
-    var isActive = aside.style.display === "flex";
-    aside.style.display = isActive ? "none" : "flex";
-  });
-};
-buttonAsides.forEach(function (object) {
-  setEventListener(Object.values(object)[0], Object.values(object)[1]);
-});
 var setYearly = function setYearly(spans, billedYearly, trialPriceSection, moneySpans) {
   if (superChargeSubtitle === null || addOnsContainer === null || bonsaiTaxPricingTag === null || partnersPricingTag === null || bonsaiTaxAccounting === null || manageTrackExpenses === null) return;
   var yearlyValues = [17, 32, 52];
@@ -298,90 +198,6 @@ function checkForChange(event) {
 if (monthYearSwitch !== null) {
   monthYearSwitch.addEventListener("change", checkForChange);
 }
-var toggleMenuVisibility = function toggleMenuVisibility(menu, state) {
-  var visibilityState = state ? "translateX(100%)" : "translateX(0%)";
-  menu.style.transform = visibilityState;
-};
-var hideInnerMenus = function hideInnerMenus() {
-  var productsAside = document.querySelector("aside#product-aside");
-  var workflowAside = document.querySelector("aside#bonsai-workflow-aside");
-  var templatesAside = document.querySelector("aside#templates-aside");
-  for (var _i = 0, _arr = [productsAside, workflowAside, templatesAside]; _i < _arr.length; _i++) {
-    var aside = _arr[_i];
-    if (aside === null) break;
-    aside.style.display = "none";
-  }
-};
-var setButtonDisabledState = function setButtonDisabledState(state) {
-  if (hamburguerMenuButton === null) return;
-  hamburguerMenuButton.disabled = state;
-};
-var setXButton = function setXButton(spans) {
-  setButtonDisabledState(true);
-  var delay = 200;
-  spans.first.style.top = "10.5px";
-  spans.second.style.backgroundColor = "transparent";
-  spans.third.style.bottom = "10.5px";
-  setTimeout(function () {
-    spans.first.style.transform = "rotate(45deg)";
-  }, delay);
-  setTimeout(function () {
-    spans.third.style.transform = "rotate(-45deg)";
-  }, delay);
-  setTimeout(function () {
-    setButtonDisabledState(false);
-  }, 500);
-};
-var setHamburguerButton = function setHamburguerButton(spans) {
-  hideInnerMenus();
-  setButtonDisabledState(true);
-  var delay = 200;
-  spans.first.style.transform = "rotate(0deg)";
-  spans.third.style.transform = "rotate(0deg)";
-  setTimeout(function () {
-    spans.first.style.top = "0px";
-    spans.second.style.backgroundColor = "#4c4d5f";
-    spans.third.style.bottom = "0px";
-  }, delay);
-  setTimeout(function () {
-    setButtonDisabledState(false);
-  }, 500);
-};
-function toggleHamburguerMenu() {
-  var asideMenu = document.querySelector("aside#hamburguer-menu");
-  if (asideMenu === null || hamburguerMenuButton == null) return;
-  var isActive = asideMenu.style.transform === "translateX(0%)";
-  var spans = {
-    first: hamburguerMenuButton.querySelector("span#first-span"),
-    second: hamburguerMenuButton.querySelector("span#second-span"),
-    third: hamburguerMenuButton.querySelector("span#third-span")
-  };
-  if (isActive) {
-    toggleMenuVisibility(asideMenu, true);
-    setHamburguerButton(spans);
-  } else {
-    toggleMenuVisibility(asideMenu, false);
-    setXButton(spans);
-  }
-}
-;
-if (hamburguerMenuButton !== null) {
-  hamburguerMenuButton.addEventListener("click", toggleHamburguerMenu);
-}
-dropdownButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    var parentArticle = button.parentNode;
-    if (parentArticle === null) return;
-    var asideMenu = parentArticle.querySelector("aside");
-    if (asideMenu === null) return;
-    var isActive = asideMenu.style.display === "block" ? true : false;
-    if (isActive) {
-      asideMenu.style.display = "none";
-    } else {
-      asideMenu.style.display = "block";
-    }
-  });
-});
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -407,7 +223,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49928" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50059" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -551,5 +367,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/index.js"], null)
-//# sourceMappingURL=/dest.db7e0565.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/year-month-switch.js"], null)
+//# sourceMappingURL=/year-month-switch.4716879d.js.map

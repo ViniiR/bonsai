@@ -117,47 +117,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/index.js":[function(require,module,exports) {
+})({"dest/dropdowns.js":[function(require,module,exports) {
 "use strict";
 
-var dropdownButtons = document.querySelectorAll("button.dropdown");
-var hamburguerMenuButton = document.querySelector("button.hamburguer-menu-button");
-var monthYearSwitch = document.querySelector("input#month-year-switch");
-var superChargeSubtitle = document.querySelector("article#sub-title > h2");
-var addOnsContainer = document.querySelector("section#add-ons-article-container");
-var monthYearTrialPrice = document.querySelectorAll("div.month-year-trial-price");
-var bonsaiTaxPricingTag = document.querySelector("div#bonsai-tax-pricing-tag");
-var partnersPricingTag = document.querySelector("div#partners-pricing-tag");
-var bonsaiTaxAccounting = document.querySelector("h3#bonsai-tax-accounting");
-var manageTrackExpenses = document.querySelector("p#manage-track-expenses");
-var productButton = document.querySelector("#product-button");
-var bonsaiWorkflowButton = document.querySelector("#bonsai-workflow-button");
-var templatesButton = document.querySelector("#templates-button");
 var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
-function setBackgroundShadow(event) {
-  if (window.innerWidth <= 425) return;
-  var backgroundShadow = document.querySelector('div#background-shadow');
-  var percentage = window.innerWidth / 22;
-  var background = "linear-gradient(65deg, white ".concat(100 - percentage, "%, #f2faff ").concat(percentage, "%)");
-  backgroundShadow.style.backgroundImage = background;
-}
-setBackgroundShadow();
-window.addEventListener("resize", setBackgroundShadow);
-var updateHeaderBackgroundColor = function updateHeaderBackgroundColor(event) {
-  var headerStickyContainer = document.querySelector('section.sticky-container');
-  var scrollThreshold = 20;
-  var scrollTop = window.scrollY;
-  if (scrollTop >= scrollThreshold) {
-    headerStickyContainer.style.backgroundColor = 'white';
-  } else {
-    headerStickyContainer.style.backgroundColor = 'transparent';
-  }
-};
-updateHeaderBackgroundColor();
-window.addEventListener('scroll', updateHeaderBackgroundColor);
-
-//TODO: REMOVE ALL CLOJURES =, YOU DONT EVEN KNOW WHAT IT MEANS
-
 var getMaxHeight = function getMaxHeight(element) {
   element.style.height = "max-content";
   var maxHeight = element.offsetHeight;
@@ -166,8 +129,9 @@ var getMaxHeight = function getMaxHeight(element) {
 };
 var startTransition = function startTransition(link, element, maxHeight) {
   link.style.pointerEvents = "none";
+  if (element === null) return;
   var elementHeight = element.style.height;
-  var numberHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
+  var numberHeight = Number(elementHeight.slice(0, elementHeight.indexOf("p")));
   if (numberHeight >= maxHeight) {
     link.style.pointerEvents = "all";
     return;
@@ -180,8 +144,9 @@ var startTransition = function startTransition(link, element, maxHeight) {
 };
 var reverseTransition = function reverseTransition(link, element) {
   link.style.pointerEvents = "none";
+  if (element === null) return;
   var height = element.style.height;
-  var numberHeight = height.slice(0, height.indexOf("p"));
+  var numberHeight = Number(height.slice(0, height.indexOf("p")));
   if (numberHeight <= 5) {
     link.style.pointerEvents = "all";
     return;
@@ -192,10 +157,11 @@ var reverseTransition = function reverseTransition(link, element) {
   });
 };
 dropdownLinksArrows.forEach(function (link) {
-  link.addEventListener("click", function (event) {
-    var menu = this.parentNode.parentNode.querySelector("ul.dropdown-anchor-menus");
-    link.isActive = !link.isActive;
-    if (!link.isActive) {
+  link.addEventListener("click", function () {
+    var _link$parentNode;
+    var menu = (_link$parentNode = link.parentNode) === null || _link$parentNode === void 0 || (_link$parentNode = _link$parentNode.parentNode) === null || _link$parentNode === void 0 ? void 0 : _link$parentNode.querySelector("ul.dropdown-anchor-menus");
+    menu.isActive = !menu.isActive;
+    if (!menu.isActive) {
       reverseTransition(link, menu);
     } else {
       window.requestAnimationFrame(function () {
@@ -204,157 +170,13 @@ dropdownLinksArrows.forEach(function (link) {
     }
   });
 });
-var buttonAsides = [{
-  productButton: productButton,
-  aside: document.querySelector("#product-aside")
-}, {
-  templatesButton: templatesButton,
-  aside: document.querySelector("aside#templates-aside")
-}, {
-  bonsaiWorkflowButton: bonsaiWorkflowButton,
-  aside: document.querySelector("#bonsai-workflow-aside")
-}];
-var setEventListener = function setEventListener(button, aside) {
-  button.addEventListener("click", function (event) {
-    event.stopPropagation();
-    aside.isActive = aside.style.display === "flex";
-    aside.style.display = aside.isActive ? "none" : "flex";
-  });
-};
-buttonAsides.forEach(function (object) {
-  setEventListener(Object.values(object)[0], object.aside);
-});
-var setYearly = function setYearly(spans, billedYearly, trialPriceSection, moneySpans) {
-  var yearlyValues = [17, 32, 52];
-  spans.monthly.style.fontWeight = "normal";
-  spans.monthly.style.color = "#8e8f98";
-  spans.yearly.style.fontWeight = "bold";
-  spans.yearly.style.color = "#4c4d5f";
-  superChargeSubtitle.innerText = "Customize your workflow with add-ons";
-  addOnsContainer.style.flexDirection = "column-reverse";
-  bonsaiTaxPricingTag.innerText = "$100";
-  partnersPricingTag.innerText = "$90";
-  bonsaiTaxAccounting.innerText = "Accounting & Tax Assistant";
-  manageTrackExpenses.innerText = "Manage your freelance finances and always be ready for tax season with easy-to-use accounting and tax tools.";
-  monthYearTrialPrice.forEach(function (div) {
-    div.innerText = "/YEAR";
-  });
-  billedYearly.forEach(function (section) {
-    section.style.display = "flex";
-  });
-  trialPriceSection.forEach(function (section) {
-    section.style.height = "110px";
-  });
-  for (var i in yearlyValues) {
-    moneySpans[i].innerText = yearlyValues[i];
-  }
-};
-var setMonthly = function setMonthly(spans, billedYearly, trialPriceSection, moneySpans) {
-  var monthlyValues = [24, 39, 79];
-  spans.monthly.style.fontWeight = "bold";
-  spans.monthly.style.color = "#4c4d5f";
-  spans.yearly.style.fontWeight = "normal";
-  spans.yearly.style.color = "#8e8f98";
-  superChargeSubtitle.innerText = "Super charge your work with add-ons";
-  addOnsContainer.style.flexDirection = "column";
-  bonsaiTaxPricingTag.innerText = "$10";
-  partnersPricingTag.innerText = "$9";
-  bonsaiTaxAccounting.innerText = "Bonsai Tax";
-  manageTrackExpenses.innerText = "Track expenses, identify write-offs, and estimate quarterly taxes easily.";
-  monthYearTrialPrice.forEach(function (div) {
-    div.innerText = "/MONTH";
-  });
-  billedYearly.forEach(function (section) {
-    section.style.display = "none";
-  });
-  trialPriceSection.forEach(function (section) {
-    section.style.height = "90px";
-  });
-  for (var i in monthlyValues) {
-    moneySpans[i].innerText = monthlyValues[i];
-  }
-};
-monthYearSwitch.addEventListener("change", function (event) {
-  var billedYearly = document.querySelectorAll("section.billed-yearly");
-  var trialPriceSection = document.querySelectorAll("section.trial-price");
-  var moneySpans = document.querySelectorAll("span.money-span");
-  var spans = {
-    monthly: document.querySelector("span#monthly"),
-    yearly: document.querySelector("span#yearly")
-  };
-  if (event.target.checked) {
-    setYearly(spans, billedYearly, trialPriceSection, moneySpans);
-  } else {
-    setMonthly(spans, billedYearly, trialPriceSection, moneySpans);
-  }
-});
-var toggleMenuVisibility = function toggleMenuVisibility(menu, state) {
-  var visibilityState = state ? "translateX(100%)" : "translateX(0%)";
-  menu.style.transform = visibilityState;
-};
-var hideInnerMenus = function hideInnerMenus() {
-  var productsAside = document.querySelector("aside#product-aside");
-  var workflowAside = document.querySelector("aside#bonsai-workflow-aside");
-  var templatesAside = document.querySelector("aside#templates-aside");
-  for (var _i = 0, _arr = [productsAside, workflowAside, templatesAside]; _i < _arr.length; _i++) {
-    var aside = _arr[_i];
-    aside.style.display = "none";
-  }
-};
-var setButtonDisabledState = function setButtonDisabledState(state) {
-  hamburguerMenuButton.disabled = state;
-};
-var setXButton = function setXButton(spans) {
-  setButtonDisabledState(true);
-  var delay = 200;
-  spans.first.style.top = "10.5px";
-  spans.second.style.backgroundColor = "transparent";
-  spans.third.style.bottom = "10.5px";
-  setTimeout(function () {
-    spans.first.style.transform = "rotate(45deg)";
-  }, delay);
-  setTimeout(function () {
-    spans.third.style.transform = "rotate(-45deg)";
-  }, delay);
-  setTimeout(function () {
-    setButtonDisabledState(false);
-  }, 500);
-};
-var setHamburguerButton = function setHamburguerButton(spans) {
-  hideInnerMenus();
-  setButtonDisabledState(true);
-  var delay = 200;
-  spans.first.style.transform = "rotate(0deg)";
-  spans.third.style.transform = "rotate(0deg)";
-  setTimeout(function () {
-    spans.first.style.top = "0px";
-    spans.second.style.backgroundColor = "#4c4d5f";
-    spans.third.style.bottom = "0px";
-  }, delay);
-  setTimeout(function () {
-    setButtonDisabledState(false);
-  }, 500);
-};
-hamburguerMenuButton.addEventListener("click", function () {
-  var asideMenu = document.querySelector("aside#hamburguer-menu");
-  asideMenu.isActive = asideMenu.style.transform === "translateX(0%)";
-  var spans = {
-    first: hamburguerMenuButton.querySelector("span#first-span"),
-    second: hamburguerMenuButton.querySelector("span#second-span"),
-    third: hamburguerMenuButton.querySelector("span#third-span")
-  };
-  if (asideMenu.isActive) {
-    toggleMenuVisibility(asideMenu, true);
-    setHamburguerButton(spans);
-  } else {
-    toggleMenuVisibility(asideMenu, false);
-    setXButton(spans);
-  }
-});
+var dropdownButtons = document.querySelectorAll("button.dropdown");
 dropdownButtons.forEach(function (button) {
   button.addEventListener("click", function () {
-    var parentArticle = this.parentNode;
+    var parentArticle = button.parentNode;
+    if (parentArticle === null) return;
     var asideMenu = parentArticle.querySelector("aside");
+    if (asideMenu === null) return;
     var isActive = asideMenu.style.display === "block" ? true : false;
     if (isActive) {
       asideMenu.style.display = "none";
@@ -388,7 +210,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57494" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50059" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -532,5 +354,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
-//# sourceMappingURL=/src.a2b27638.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/dropdowns.js"], null)
+//# sourceMappingURL=/dropdowns.49590114.js.map

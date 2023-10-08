@@ -117,62 +117,101 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+})({"dest/menutoggle.js":[function(require,module,exports) {
+"use strict";
+
+var buttonAsides = [{
+  button: document.querySelector("#product-button"),
+  aside: document.querySelector("#product-aside")
+}, {
+  button: document.querySelector("#templates-button"),
+  aside: document.querySelector("aside#templates-aside")
+}, {
+  button: document.querySelector("#bonsai-workflow-button"),
+  aside: document.querySelector("#bonsai-workflow-aside")
+}];
+var setEventListener = function setEventListener(button, aside) {
+  if (button === null || aside === null) return;
+  button.addEventListener("click", function (event) {
+    event.stopPropagation();
+    var isActive = aside.style.display === "flex";
+    aside.style.display = isActive ? "none" : "flex";
+  });
+};
+buttonAsides.forEach(function (object) {
+  setEventListener(Object.values(object)[0], Object.values(object)[1]);
+});
+var toggleMenuVisibility = function toggleMenuVisibility(menu, state) {
+  var visibilityState = state ? "translateX(100%)" : "translateX(0%)";
+  menu.style.transform = visibilityState;
+};
+var hideInnerMenus = function hideInnerMenus() {
+  var productsAside = document.querySelector("aside#product-aside");
+  var workflowAside = document.querySelector("aside#bonsai-workflow-aside");
+  var templatesAside = document.querySelector("aside#templates-aside");
+  for (var _i = 0, _arr = [productsAside, workflowAside, templatesAside]; _i < _arr.length; _i++) {
+    var aside = _arr[_i];
+    if (aside === null) break;
+    aside.style.display = "none";
   }
-  return bundleURL;
-}
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-  return '/';
-}
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
+};
+var hamburguerMenuButton = document.querySelector("button.hamburguer-menu-button");
+var setButtonDisabledState = function setButtonDisabledState(state) {
+  if (hamburguerMenuButton === null) return;
+  hamburguerMenuButton.disabled = state;
+};
+var setXButton = function setXButton(spans) {
+  setButtonDisabledState(true);
+  var delay = 200;
+  spans.first.style.top = "10.5px";
+  spans.second.style.backgroundColor = "transparent";
+  spans.third.style.bottom = "10.5px";
+  setTimeout(function () {
+    spans.first.style.transform = "rotate(45deg)";
+  }, delay);
+  setTimeout(function () {
+    spans.third.style.transform = "rotate(-45deg)";
+  }, delay);
+  setTimeout(function () {
+    setButtonDisabledState(false);
+  }, 500);
+};
+var setHamburguerButton = function setHamburguerButton(spans) {
+  hideInnerMenus();
+  setButtonDisabledState(true);
+  var delay = 200;
+  spans.first.style.transform = "rotate(0deg)";
+  spans.third.style.transform = "rotate(0deg)";
+  setTimeout(function () {
+    spans.first.style.top = "0px";
+    spans.second.style.backgroundColor = "#4c4d5f";
+    spans.third.style.bottom = "0px";
+  }, delay);
+  setTimeout(function () {
+    setButtonDisabledState(false);
+  }, 500);
+};
+function toggleHamburguerMenu() {
+  var asideMenu = document.querySelector("aside#hamburguer-menu");
+  if (asideMenu === null || hamburguerMenuButton == null) return;
+  var isActive = asideMenu.style.transform === "translateX(0%)";
+  var spans = {
+    first: hamburguerMenuButton.querySelector("span#first-span"),
+    second: hamburguerMenuButton.querySelector("span#second-span"),
+    third: hamburguerMenuButton.querySelector("span#third-span")
   };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
+  if (isActive) {
+    toggleMenuVisibility(asideMenu, true);
+    setHamburguerButton(spans);
+  } else {
+    toggleMenuVisibility(asideMenu, false);
+    setXButton(spans);
   }
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-    cssTimeout = null;
-  }, 50);
 }
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"scss/tablet.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+if (hamburguerMenuButton !== null) {
+  hamburguerMenuButton.addEventListener("click", toggleHamburguerMenu);
+}
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -341,5 +380,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/tablet.52dea631.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/menutoggle.js"], null)
+//# sourceMappingURL=/menutoggle.d5804dcf.js.map
