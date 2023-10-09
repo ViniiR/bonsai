@@ -94,18 +94,19 @@ main {
                     border-color: $maingreen;
                 }
             }
-            > section#input-wrapper {
+            > fieldset#input-wrapper {
                 display: flex;
                 flex-flow: row-reverse nowrap;
                 justify-content: center;
                 align-items: center;
+                border: none;
                 gap: 10px;
                 font-size: .9rem;
                 input {
                     cursor: pointer;
                 }
             }
-            > button {
+            button {
                 cursor: pointer;
             }
             > button[type='submit'] {
@@ -121,11 +122,19 @@ main {
                     background-color: #00bc90;
                 }
             }
-            > button[type="reset"] {
-                color: $maingreen;
-                background-color: transparent;
-                font-size: .9rem;
+            > fieldset {
+                display: flex;
+                flex-flow: column nowrap;
                 border: none;
+                justify-content: center;
+                gap: 10px;
+                align-items: center;
+                > button[type="reset"], > button[type="button"] {
+                    color: $maingreen;
+                    background-color: transparent;
+                    font-size: .9rem;
+                    border: none;
+                }
             }
         }
     }

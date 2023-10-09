@@ -117,73 +117,20 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"dest/dropdowns.js":[function(require,module,exports) {
+})({"dest/form-validation.js":[function(require,module,exports) {
 "use strict";
 
-var dropdownLinksArrows = document.querySelectorAll("div.dropdown-arrow");
-var getMaxHeight = function getMaxHeight(element) {
-  element.style.height = "max-content";
-  var maxHeight = element.offsetHeight;
-  element.style.height = "0px";
-  return maxHeight;
-};
-var startTransition = function startTransition(link, element, maxHeight) {
-  link.style.pointerEvents = "none";
-  if (element === null) return;
-  var elementHeight = element.style.height;
-  var numberHeight = Number(elementHeight.slice(0, elementHeight.indexOf("p")));
-  if (numberHeight >= maxHeight) {
-    link.style.pointerEvents = "all";
-    return;
+var loginForm = document.querySelector('#sign-in');
+loginForm === null || loginForm === void 0 ? void 0 : loginForm.addEventListener("submit", function (event) {
+  localStorage.setItem('id', Math.floor(Math.random() * 1000000).toString());
+  var email = document.querySelector('#email');
+  var emailValue = email === null || email === void 0 ? void 0 : email.value;
+  var clientEmail = emailValue !== undefined ? emailValue.toString() : '';
+  var id = localStorage.getItem('id');
+  if (id !== null) {
+    localStorage.setItem(id, clientEmail);
   }
-  var slicedHeight = elementHeight.slice(0, elementHeight.indexOf("p"));
-  element.style.height = Number(slicedHeight) + 10 + "px";
-  requestAnimationFrame(function () {
-    startTransition(link, element, maxHeight);
-  });
-};
-var reverseTransition = function reverseTransition(link, element) {
-  link.style.pointerEvents = "none";
-  if (element === null) return;
-  var height = element.style.height;
-  var numberHeight = Number(height.slice(0, height.indexOf("p")));
-  if (numberHeight <= 5) {
-    link.style.pointerEvents = "all";
-    return;
-  }
-  element.style.height = Number(numberHeight) - 10 + "px";
-  requestAnimationFrame(function () {
-    reverseTransition(link, element);
-  });
-};
-dropdownLinksArrows.forEach(function (link) {
-  link.addEventListener("click", function () {
-    var _link$parentNode;
-    var menu = (_link$parentNode = link.parentNode) === null || _link$parentNode === void 0 || (_link$parentNode = _link$parentNode.parentNode) === null || _link$parentNode === void 0 ? void 0 : _link$parentNode.querySelector("ul.dropdown-anchor-menus");
-    menu.isActive = !menu.isActive;
-    if (!menu.isActive) {
-      reverseTransition(link, menu);
-    } else {
-      window.requestAnimationFrame(function () {
-        startTransition(link, menu, getMaxHeight(menu));
-      });
-    }
-  });
-});
-var dropdownButtons = document.querySelectorAll("button.dropdown");
-dropdownButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    var parentArticle = button.parentNode;
-    if (parentArticle === null) return;
-    var asideMenu = parentArticle.querySelector("aside");
-    if (asideMenu === null) return;
-    var isActive = asideMenu.style.display === "block" ? true : false;
-    if (isActive) {
-      asideMenu.style.display = "none";
-    } else {
-      asideMenu.style.display = "block";
-    }
-  });
+  var login = document.querySelector('button[type="submit"]');
 });
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -354,5 +301,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/dropdowns.js"], null)
-//# sourceMappingURL=/dropdowns.49590114.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","dest/form-validation.js"], null)
+//# sourceMappingURL=/form-validation.52866465.js.map

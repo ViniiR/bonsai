@@ -90,18 +90,19 @@ main > section > form input:not(input[type=checkbox])::placeholder {
 main > section > form input:not(input[type=checkbox]):hover {
   border-color: #00b289;
 }
-main > section > form > section#input-wrapper {
+main > section > form > fieldset#input-wrapper {
   display: flex;
   flex-flow: row-reverse nowrap;
   justify-content: center;
   align-items: center;
+  border: none;
   gap: 10px;
   font-size: 0.9rem;
 }
-main > section > form > section#input-wrapper input {
+main > section > form > fieldset#input-wrapper input {
   cursor: pointer;
 }
-main > section > form > button {
+main > section > form button {
   cursor: pointer;
 }
 main > section > form > button[type=submit] {
@@ -117,7 +118,15 @@ main > section > form > button[type=submit] {
 main > section > form > button[type=submit]:hover {
   background-color: #00bc90;
 }
-main > section > form > button[type=reset] {
+main > section > form > fieldset {
+  display: flex;
+  flex-flow: column nowrap;
+  border: none;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+main > section > form > fieldset > button[type=reset], main > section > form > fieldset > button[type=button] {
   color: #00b289;
   background-color: transparent;
   font-size: 0.9rem;

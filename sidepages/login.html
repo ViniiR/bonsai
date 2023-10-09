@@ -26,23 +26,24 @@
                 <p>or</p>
                 <hr>
             </section>
-            <!-- TODO: add min and max and etc bla bla bla -->
-            <form action="#" id="sign-in" method="post">
-                <input type="email" name="email" id="email" placeholder="Email">
-                <input type="password" name="password" id="password" placeholder="Password">
-                <section id="input-wrapper">
+            <form action="" id="sign-in" method="post">
+                <input type="email" name="email" id="email" placeholder="Email" required autocomplete="off">
+                <input type="password" name="password" id="password" placeholder="Password" required maxlength="256" autocomplete="off">
+                <fieldset id="input-wrapper">
                     <label for="remember">Remember me</label>
-                    <input type="checkbox" checked name="remember" id="remember">
-                </section>
+                    <input type="checkbox" checked name="remember" id="remember" maxlength="32">
+                </fieldset>
                 <button type="submit">
                     Log in
                 </button>
-                <button type="reset">
-                    Reset Password
-                </button>
-                <button type="reset">
-                    Resend Verification Email
-                </button>
+                <fieldset>
+                    <button type="reset">
+                        Reset Password
+                    </button>
+                    <button type="button">
+                        Resend Verification Email
+                    </button>
+                </fieldset>
             </form>
         </section>
     </main>
