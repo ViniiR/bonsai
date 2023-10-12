@@ -1,0 +1,65 @@
+@media screen and (min-width: 1024px) {
+    header {
+        background-color: white;
+        button.hamburguer-menu-button {
+            display: none;
+        }
+        aside#hamburguer-menu {
+            position: fixed;
+            transform: translateX(0%);
+            height: 100px;
+            background-color: transparent;
+            width: 80%;
+            margin-left: 20%;
+            > section.menu-container {
+                flex-direction: row;
+                display: flex;
+                flex-flow: row nowrap;
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+                > section#smaller-logo-container {
+                    display: none;
+                }
+                section#menu-content {
+                    ul {
+                        width: 460px;
+                        justify-content: space-around;
+                        flex-direction: row;
+                        gap: 30px;
+                        li {
+                            font-size: 1.3rem;
+                            width: 125px;
+                            display: flex;
+                            flex-flow: row nowrap;
+                            justify-content: center;
+                            align-items: center;
+                            border-bottom: none;
+                        }
+                    }
+                }
+                section#login-sign-in-section {
+                    flex-direction: row;
+                    display: flex;
+                    flex-flow: row nowrap;
+                    justify-content: center;
+                    align-items: center;
+                    a {
+                        width: 100px;
+                        &.start-free-button {
+                            width: 130px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    main {
+
+    }
+
+    footer {
+
+    }
+}
