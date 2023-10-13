@@ -10,8 +10,19 @@ const updateHeaderBackgroundColor = (): void => {
     }
 };
 
-updateHeaderBackgroundColor();
-window.addEventListener("scroll", updateHeaderBackgroundColor);
+const setHeaderBackgroundColor = () => {
+    const headerStickyContainer: HTMLElement | null = document.querySelector("section.sticky-container");
+    if (headerStickyContainer === null) return;
+    headerStickyContainer.style.backgroundColor = 'white'
+};
+
+if (window.innerWidth < 1024 && window.innerWidth > 424) {
+    updateHeaderBackgroundColor();
+    window.addEventListener("scroll", updateHeaderBackgroundColor);
+} else {
+    window.removeEventListener('scroll', updateHeaderBackgroundColor);
+    setHeaderBackgroundColor()
+}
 
 function setBackgroundShadow(): void {
     if (window.innerWidth <= 425) return;
