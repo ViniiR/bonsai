@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "webpack serve --open",
     "start": "tsc --watch",
-    "build": "parcel build index.html"
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +15,18 @@
     "scss": "^0.2.4"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "node-sass": "^9.0.0",
     "sass": "^1.68.0",
-    "typescript": "^5.2.2"
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
